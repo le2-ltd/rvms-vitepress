@@ -1,0 +1,27 @@
+ARG IMAGE_PREFIX_BUILDER
+ARG IMAGE_PREFIX
+
+FROM ${IMAGE_PREFIX_BUILDER}node-uniapp:3 AS builder
+
+#FROM cdle2/node-uniapp:3 AS builder
+
+WORKDIR /app
+
+COPY . ./src
+
+#ARG NODE_ENV
+ARG VITE_DEMO_API
+ARG VITE_COMPANY_API
+
+#RUN mv ./src/.env.$NODE_ENV ./.env || true
+
+#RUN env
+
+RUN npm run build:h5
+
+#FROM nginx:latest
+
+FROM ${IMAGE_PREFIX}nginx:latest
+
+
+COPY --from=builder /app/dist/build/h5 /www
