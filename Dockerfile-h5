@@ -10,7 +10,8 @@ COPY package.json package-lock.json ./
 # 如果你用的是 yarn，请使用下面这一行
 # RUN yarn install --frozen-lockfile
 # 以下示例假设使用 npm：
-RUN npm ci
+RUN npm ci --verbose
+# RUN npm instal --verbose
 
 RUN npm ls
 
