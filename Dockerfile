@@ -1,23 +1,33 @@
+
 ARG IMAGE_PREFIX
 
-FROM ${IMAGE_PREFIX}node:latest AS builder
+# FROM ${IMAGE_PREFIX}node:latest AS builder
+# FROM node:trixie-slim AS builder
+FROM ${IMAGE_PREFIX}node:alpine AS builder
+
+RUN apk add --no-cache git ca-certificates;
+
+# RUN set -eux; \
+#     apt-get update; \
+#     apt-get install -y --no-install-recommends git ca-certificates ; \
+#     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
 COPY package.json package-lock.json ./
 # 如果你用的是 npm，请使用下面两行中的一行（点击注释取消注释）
-# RUN npm ci --registry=https://registry.npm.taobao.org
+RUN npm ci --verbose --registry=https://registry.npmmirror.com
 # 如果你用的是 yarn，请使用下面这一行
 # RUN yarn install --frozen-lockfile
 # 以下示例假设使用 npm：
-RUN npm ci --verbose
+# RUN npm ci --verbose
 # RUN npm instal --verbose
 
 RUN npm ls
 
 COPY . .
 
-RUN npm run docs:build
+RUN npm run docs:build  
 
 RUN du -sh /app/docs/.vitepress/dist
 

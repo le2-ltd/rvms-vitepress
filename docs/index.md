@@ -11,11 +11,11 @@ hero:
     alt: 智行租赁
   actions:
     - theme: brand
-      text: 功能一览
-      link: /overview/what-features
-    - theme: alt
       text: 特色功能
       link: /overview/featured-functions
+    - theme: alt
+      text: 功能一览
+      link: /overview/what-features
     - theme: alt
       text: 版本介绍
       link: /overview/version-introduction
