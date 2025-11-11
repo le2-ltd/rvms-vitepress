@@ -6,6 +6,8 @@ aside: false
 
 ## 流程图
 
+以下流程图从销售、财务、车管三个角色出发，梳理了从新增客户到发车验车的关键节点，可作为新员工入职培训或流程稽核的参考。
+
 ```mermaid
 %%{init: { "theme": "default", "themeVariables": { "fontFamily": "Arial" }}}%%
 flowchart TB
