@@ -18,7 +18,7 @@ RUN npm ls
 
 COPY . .
 
-RUN npm run docs:build  
+RUN npm run docs:build
 
 RUN du -sh /app/docs/.vitepress/dist
 

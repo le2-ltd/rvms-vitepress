@@ -4,6 +4,7 @@ import { withMermaid } from "vitepress-plugin-mermaid";
 
 // https://vitepress.dev/reference/site-config
 export default withMermaid({
+  srcDir: "docs",
   title: "智行租赁-使用手册",
   // description: "A VitePress Site",
   themeConfig: {
