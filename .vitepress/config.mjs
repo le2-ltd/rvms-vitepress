@@ -1,9 +1,14 @@
 import { defineConfig } from "vitepress";
 
-import { withMermaid } from "vitepress-plugin-mermaid";
+import { MermaidMarkdown, MermaidPlugin } from "vitepress-plugin-mermaid";
 
 // https://vitepress.dev/reference/site-config
-export default withMermaid({
+export default defineConfig({
+  markdown: {
+    config(md) {
+      md.use(MermaidMarkdown);
+    },
+  },
   srcDir: "docs",
   title: "智行租赁-使用手册",
   // description: "A VitePress Site",
@@ -180,6 +185,13 @@ export default withMermaid({
   },
 
   vite: {
+    plugins: [MermaidPlugin()],
+    optimizeDeps: {
+      include: ["mermaid"], // 只预构建 mermaid
+    },
+    ssr: {
+      noExternal: ["mermaid"],
+    },
     server: {
       port: 3000, // 你想要的端口号
       host: "0.0.0.0", // 如果需要对局域网开放，也可以加上 host

@@ -1,3 +1,3 @@
 
 run-dev:
-	npm run docs:dev
+	pnpm run docs:dev

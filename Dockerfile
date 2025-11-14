@@ -3,27 +3,26 @@ ARG IMAGE_EXT_PREFIX
 
 FROM ${IMAGE_EXT_PREFIX}node-alpine AS builder
 
+RUN npm config set registry https://registry.npmmirror.com
+
+RUN npm install -g pnpm
+
 WORKDIR /app
 
-COPY package.json package-lock.json ./
-# 如果你用的是 npm，请使用下面两行中的一行（点击注释取消注释）
-RUN npm ci --verbose --registry=https://registry.npmmirror.com
-# 如果你用的是 yarn，请使用下面这一行
-# RUN yarn install --frozen-lockfile
-# 以下示例假设使用 npm：
-# RUN npm ci --verbose
-# RUN npm instal --verbose
+COPY package.json pnpm-lock.yaml ./
 
-RUN npm ls
+RUN pnpm install --frozen-lockfile
+
+RUN pnpm ls
 
 COPY . .
 
-RUN npm run docs:build
+RUN pnpm run docs:build
 
-RUN du -sh /app/docs/.vitepress/dist
+# RUN du -sh /app/.vitepress/dist
 
 ARG IMAGE_PREFIX
 
 FROM ${IMAGE_PREFIX}nginx:latest
 
-COPY --from=builder /app/docs/.vitepress/dist /app
+COPY --from=builder /app/.vitepress/dist /app
