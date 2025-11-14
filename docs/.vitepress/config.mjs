@@ -41,8 +41,8 @@ export default withMermaid({
     // ],
     sidebar: [
       {
-        // text: "总体介绍",
-        // collapsible: false,
+        text: "总体介绍",
+        collapsible: false,
         items: [
           {
             text: "功能一览",
@@ -59,92 +59,41 @@ export default withMermaid({
         ],
       },
 
-      // 二、基本操作流程
-      // {
-      //   text: "二、基本操作流程",
-      //   collapsible: false,
-      //   items: [
-      //     { text: "122账号设置", link: "/config/122" },
-      //     {
-      //       text: "新公司配置",
-      //       link: "/basic-workflow/new-company-setup",
-      //     },
-      //     {
-      //       text: "租车流程",
-      //       link: "/basic-workflow/rental-process",
-      //     },
-      //     // {
-      //     //   text: "导入基础数据（必看）",
-      //     //   link: "/basic-workflow/import-basic-data",
-      //     // },
-      //     {
-      //       text: "退车流程",
-      //       link: "/basic-workflow/return-process",
-      //     },
-      //     // {
-      //     //   text: "续租流程",
-      //     //   link: "/basic-workflow/renewal-process",
-      //     // },
-      //     // {
-      //     //   text: "永久换车流程",
-      //     //   link: "/basic-workflow/permanent-replacement",
-      //     // },
-      //     // {
-      //     //   text: "车队功能",
-      //     //   link: "/basic-workflow/fleet-function",
-      //     // },
-      //     // {
-      //     //   text: "不同员工操作流程演示",
-      //     //   link: "/basic-workflow/employee-workflow-demo",
-      //     // },
-      //     // {
-      //     //   text: "签约电子合同（e签宝）",
-      //     //   link: "/basic-workflow/e-signbao-contract",
-      //     // },
-      //     // {
-      //     //   text: "签约电子合同（法大大）",
-      //     //   link: "/basic-workflow/fadada-contract",
-      //     // },
-      //   ],
-      // },
       {
-        // text: "详细操作",
-        collapsible: true,
+        text: "基本操作",
+        collapsible: false,
         items: [
           {
             text: "新公司配置",
             link: "/basic-workflow/new-company-setup",
           },
-
-          { text: "配置管理", link: "/config/" },
-          { text: "员工管理", link: "/permission/" },
-          { text: "数据统计", link: "/statistics/" },
-          { text: "车辆管理", link: "/permission/role" },
-          { text: "客户管理", link: "/permission/admin" },
           {
             text: "租车流程",
             link: "/basic-workflow/rental-process",
           },
-          // {
-          //   text: "导入基础数据（必看）",
-          //   link: "/basic-workflow/import-basic-data",
-          // },
           {
             text: "退车流程",
             link: "/basic-workflow/return-process",
           },
-          { text: "财务管理", link: "/finance/" },
-          { text: "风控管理", link: "/risk/" },
-          { text: "消息管理", link: "/delivery/" },
-          { text: "租客端微信小程序", link: "/customer-app/" },
         ],
       },
 
-      // {
-      //   text: "配置管理",
-      //   collapsible: true,
-      //   items: [],
-      // },
+      {
+        text: "详细操作",
+        collapsible: true,
+        items: [
+          // { text: "配置管理", link: "/config/" },
+          // { text: "员工管理", link: "/permission/" },
+          // { text: "数据统计", link: "/statistics/" },
+          // { text: "车辆管理", link: "/permission/role" },
+          // { text: "客户管理", link: "/permission/admin" },
+          // { text: "财务管理", link: "/finance/" },
+          // { text: "风控管理", link: "/risk/" },
+          // { text: "消息管理", link: "/delivery/" },
+          // { text: "租客端微信小程序", link: "/customer-app/" },
+        ],
+      },
+
       // {
       //   text: "车辆管理",
       //   collapsible: true,

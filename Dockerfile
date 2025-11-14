@@ -1,16 +1,7 @@
 
-ARG IMAGE_PREFIX
+ARG IMAGE_EXT_PREFIX
 
-# FROM ${IMAGE_PREFIX}node:latest AS builder
-# FROM node:trixie-slim AS builder
-FROM ${IMAGE_PREFIX}node:alpine AS builder
-
-RUN apk add --no-cache git ca-certificates;
-
-# RUN set -eux; \
-#     apt-get update; \
-#     apt-get install -y --no-install-recommends git ca-certificates ; \
-#     rm -rf /var/lib/apt/lists/*
+FROM ${IMAGE_EXT_PREFIX}node-alpine AS builder
 
 WORKDIR /app
 
@@ -30,6 +21,8 @@ COPY . .
 RUN npm run docs:build  
 
 RUN du -sh /app/docs/.vitepress/dist
+
+ARG IMAGE_PREFIX
 
 FROM ${IMAGE_PREFIX}nginx:latest
 
