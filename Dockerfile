@@ -1,4 +1,4 @@
-
+ARG IMAGE_PREFIX
 ARG IMAGE_EXT_PREFIX
 
 FROM ${IMAGE_EXT_PREFIX}node-alpine AS builder
@@ -20,8 +20,6 @@ COPY . .
 RUN pnpm run docs:build
 
 # RUN du -sh /app/.vitepress/dist
-
-ARG IMAGE_PREFIX
 
 FROM ${IMAGE_PREFIX}nginx:latest
 
