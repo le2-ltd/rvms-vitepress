@@ -10,8 +10,8 @@ export default defineConfig({
     },
   },
   srcDir: "docs",
-  title: "智行租赁-使用手册",
-  // description: "A VitePress Site",
+  title: "智行租赁",
+  description: "智行租赁管理系统使用手册",
   themeConfig: {
     search: {
       provider: "local",
@@ -29,7 +29,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: "首页", link: "/" },
-      { text: "演示站点", link: "https://h5-demo.rc1.le2.fun/" },
+      { text: "演示站点", link: "https://h5-demo.rc1.le2.ltd/" },
     ],
 
     // sidebar: [
