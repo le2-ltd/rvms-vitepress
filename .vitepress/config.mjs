@@ -81,6 +81,18 @@ export default defineConfig({
             text: "退车流程",
             link: "/basic-workflow/return-process",
           },
+          {
+            text: "换车",
+            link: "/basic-workflow/car-change",
+          },
+          {
+            text: "临时换车",
+            link: "/basic-workflow/tmp-replace",
+          },
+          {
+            text: "违章转移",
+            link: "/basic-workflow/violation-transfer",
+          },
         ],
       },
 

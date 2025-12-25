@@ -1,6 +1,4 @@
 
-# registry=https://registry.npmjs.org/
-
 run-dev:
 	npm config set registry https://registry.npmmirror.com
 	pnpm update
