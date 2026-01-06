@@ -86,6 +86,10 @@ export default defineConfig({
             link: "/basic-workflow/car-change",
           },
           {
+            text: "续租",
+            link: "/basic-workflow/renewal",
+          },
+          {
             text: "临时换车",
             link: "/basic-workflow/tmp-replace",
           },
