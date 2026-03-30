@@ -7,7 +7,7 @@ hero:
   text: "懂业务的汽车租赁数字化运营中枢"
   tagline: "智行租赁以 AI、云计算与大数据为引擎，帮助车管、驾管、财务、销售高效协作，管好车辆、资金与司机，实现精细化运营并支撑租赁业务高速增长。"
   image:
-    src: /logo.ico
+    src: /favicon.ico
     alt: 智行租赁
   actions:
     - theme: alt

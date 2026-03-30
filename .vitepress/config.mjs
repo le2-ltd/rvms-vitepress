@@ -58,10 +58,10 @@ export default defineConfig({
             text: "特色功能",
             link: "/overview/featured-functions",
           },
-          {
-            text: "版本介绍",
-            link: "/overview/version-introduction",
-          },
+          // {
+          //   text: "版本介绍",
+          //   link: "/overview/version-introduction",
+          // },
         ],
       },
 
