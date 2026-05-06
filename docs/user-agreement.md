@@ -1,5 +1,7 @@
 ---
 layout: LegalPageLayout
+title: 用户协议
+description: 智行租赁用户协议，说明服务开通、账号管理、数据处理、费用支付、使用规范、免责条款和协议终止等约定。
 ---
 
 # 智行租赁用户协议
