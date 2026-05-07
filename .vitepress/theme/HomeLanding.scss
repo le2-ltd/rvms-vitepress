@@ -135,37 +135,108 @@ $bp-mobile: 768px;
   }
 }
 
-.figma-theme-toggle {
+.figma-theme-toggle-zone {
   position: absolute;
-  top: 32px;
-  right: max(24px, calc((100vw - 1180px) / 2));
+  top: 20px;
+  right: max(12px, calc((100vw - 1180px) / 2 - 12px));
   z-index: 10;
   display: grid;
-  width: 48px;
-  height: 48px;
+  width: 72px;
+  height: 72px;
+  place-items: center;
+}
+
+.figma-theme-toggle {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  width: 40px;
+  height: 40px;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--fl-hairline-strong);
+  border: 1px solid var(--fl-hairline);
   border-radius: 9999px;
   background: var(--fl-card);
   color: var(--fl-ink);
   cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition:
+    opacity 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease,
+    transform 160ms ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--fl-hairline-strong);
+    background: var(--fl-soft);
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
 
   &__icon {
     position: relative;
-    width: 20px;
-    height: 20px;
-    border: 2px solid currentColor;
-    border-radius: 9999px;
+    display: block;
+    width: 16px;
+    height: 16px;
 
+    &::before,
     &::after {
       position: absolute;
-      inset: 4px;
-      border-radius: inherit;
-      background: currentColor;
       content: "";
     }
+
+    &--moon {
+      &::before {
+        inset: 1px;
+        border-radius: 9999px;
+        background: currentColor;
+      }
+
+      &::after {
+        top: -1px;
+        right: -1px;
+        width: 12px;
+        height: 12px;
+        border-radius: 9999px;
+        background: var(--fl-card);
+      }
+    }
+
+    &--sun {
+      &::before {
+        inset: 4px;
+        border-radius: 9999px;
+        background: currentColor;
+      }
+
+      &::after {
+        inset: 0;
+        border-radius: 9999px;
+        background:
+          linear-gradient(currentColor, currentColor) center top / 1.5px 4px no-repeat,
+          linear-gradient(currentColor, currentColor) center bottom / 1.5px 4px no-repeat,
+          linear-gradient(currentColor, currentColor) left center / 4px 1.5px no-repeat,
+          linear-gradient(currentColor, currentColor) right center / 4px 1.5px no-repeat,
+          linear-gradient(currentColor, currentColor) 2px 2px / 1.5px 3px no-repeat,
+          linear-gradient(currentColor, currentColor) calc(100% - 2px) 2px / 1.5px 3px no-repeat,
+          linear-gradient(currentColor, currentColor) 2px calc(100% - 2px) / 1.5px 3px no-repeat,
+          linear-gradient(currentColor, currentColor) calc(100% - 2px) calc(100% - 2px) / 1.5px 3px no-repeat;
+      }
+    }
   }
+}
+
+.figma-theme-toggle-zone:hover .figma-theme-toggle,
+.figma-theme-toggle-zone:focus-within .figma-theme-toggle,
+.figma-theme-toggle:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 .figma-section {
@@ -319,6 +390,18 @@ $bp-mobile: 768px;
 .figma-copy {
   @include copy(18px);
   max-width: 780px;
+}
+
+.figma-intro {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+
+  .figma-copy,
+  .figma-actions,
+  .figma-tags {
+    margin-top: 0;
+  }
 }
 
 .figma-actions,
@@ -501,8 +584,14 @@ $bp-mobile: 768px;
     justify-self: center;
   }
 
-  .figma-hero h1 {
-    font-size: 64px;
+  .figma-hero {
+    h1 {
+      font-size: 64px;
+    }
+
+    &__visual {
+      justify-self: center;
+    }
   }
 
   .figma-section {
@@ -519,6 +608,27 @@ $bp-mobile: 768px;
   .figma-grid--4,
   .figma-grid--6 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .figma-hero {
+    &__inner {
+      gap: 36px;
+    }
+
+    h1 {
+      max-width: 100%;
+      font-size: 56px;
+    }
+
+    &__visual {
+      width: 220px;
+    }
+  }
+
+  .figma-copy {
+    max-width: 100%;
   }
 }
 
@@ -569,5 +679,18 @@ $bp-mobile: 768px;
 
   .figma-card--contact {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (hover: none) {
+  .figma-theme-toggle-zone {
+    top: 20px;
+    right: max(12px, calc((100vw - 1180px) / 2 - 12px));
+  }
+
+  .figma-theme-toggle {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
   }
 }

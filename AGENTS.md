@@ -1,28 +1,32 @@
 # AGENTS.md
 
-## Project rules
+## 项目规则
 
-Before implementing or modifying any UI, read `DESIGN.md` first.
+在实现或修改任何 UI 之前，必须先阅读 `DESIGN.md`。
 
-Follow `DESIGN.md` for:
-- visual theme and atmosphere
-- color palette
-- typography
-- spacing
-- layout
-- buttons
-- cards
-- forms
-- navigation
-- responsive behavior
-- do's and don'ts
+以下内容都要遵循 `DESIGN.md`：
+- 视觉主题和整体氛围
+- 色彩方案
+- 字体排版
+- 间距
+- 布局
+- 按钮
+- 卡片
+- 表单
+- 导航
+- 响应式行为
+- 应做事项和禁止事项
 
-Do not invent a separate visual style unless the user explicitly asks.
+除非用户明确要求，否则不要另起一套视觉风格。
 
-## Frontend implementation rules
+## 前端实现规则
 
-- Reuse existing components when possible.
-- Keep styles consistent with the existing stack.
-- Do not add new UI libraries unless necessary.
-- After changes, run the relevant lint/typecheck/build command if available.
-- Summarize what changed and which parts of `DESIGN.md` were applied.
+- 尽可能复用已有组件。
+- 保持样式与当前技术栈一致。
+- 除非确有必要，不要新增 UI 库。
+- UI、样式、文案等前端小改，优先使用 `make run-dev` 或 `pnpm run docs:dev`，通过热更新和浏览器确认效果。
+- 涉及 VitePress 配置、构建链路、依赖、环境变量、路由或静态资源加载方式等改动时，补跑 `pnpm run docs:build`。
+- 如果用户明确要求不跑测试或不跑 build，遵从用户要求。
+- 本项目当前没有独立的 `lint` 或 `typecheck` 命令，不要默认假设它们存在。
+- `docs:dev` 是日常反馈路径，`docs:build` 是发布前或配置变更后的完整校验路径。
+- 总结本次修改内容，并说明应用了 `DESIGN.md` 中的哪些部分。
