@@ -2,6 +2,7 @@
 import { h } from 'vue'
 import { useData } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
+import HomeLanding from './HomeLanding.vue'
 import LegalPageLayout from './LegalPageLayout.vue'
 import './style.css'
 
@@ -15,9 +16,11 @@ export default {
       return h(LegalPageLayout)
     }
 
-    return h(DefaultTheme.Layout, null, {
-      // https://vitepress.dev/guide/extending-default-theme#layout-slots
-    })
+    if (frontmatter.value.layout === 'home') {
+      return h(HomeLanding)
+    }
+
+    return h(DefaultTheme.Layout)
   },
   enhanceApp({ app }) {
     app.component('LegalPageLayout', LegalPageLayout)

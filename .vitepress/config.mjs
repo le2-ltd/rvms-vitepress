@@ -1,17 +1,148 @@
 import { defineConfig } from "vitepress";
+import { existsSync, readFileSync } from "node:fs";
 
 import { MermaidMarkdown, MermaidPlugin } from "vitepress-plugin-mermaid";
 
+const siteUrl = "https://rvms.le2.fun";
+const siteTitle = "智行租赁";
+const siteDescription =
+  "智行租赁是面向汽车租赁公司的数字化运营系统，统一管理车辆、司机、客户、订单、合同、财务、风控、消息提醒与图片留痕，帮助门店、车管、财务和管理层高效协同。";
+const siteKeywords =
+  "汽车租赁系统,租车管理系统,汽车租赁管理软件,车队管理系统,租赁订单管理,车辆管理系统,租车财务管理,违章年检管理,智行租赁";
+const noindexPages = new Set(["api-examples.md", "markdown-examples.md"]);
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: siteTitle,
+  alternateName: "智行租赁汽车租赁管理系统",
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "Web, WeChat Mini Program",
+  url: siteUrl,
+  description: siteDescription,
+  publisher: {
+    "@type": "Organization",
+    name: "成都雷耳兔科技有限公司",
+    url: siteUrl,
+  },
+  offers: {
+    "@type": "AggregateOffer",
+    priceCurrency: "CNY",
+    lowPrice: "1300",
+    offerCount: "3",
+    url: `${siteUrl}/overview/version-introduction.html`,
+  },
+  featureList: [
+    "车辆全生命周期管理",
+    "租赁订单闭环管理",
+    "收付款与押金管理",
+    "违章年检同步",
+    "证件 OCR 识别",
+    "企业微信消息提醒",
+    "角色权限与操作留痕",
+  ],
+};
+
+function getPagePath(relativePath) {
+  if (!relativePath || relativePath === "index.md") return "/";
+  return `/${relativePath.replace(/(^|\/)index\.md$/, "$1").replace(/\.md$/, ".html")}`;
+}
+
+function readEnvValue(mode, name) {
+  const envPath = new URL(`../.env.${mode}`, import.meta.url);
+
+  if (!existsSync(envPath)) return "";
+
+  const line = readFileSync(envPath, "utf8")
+    .split(/\r?\n/)
+    .find((item) => item.trim().startsWith(`${name}=`));
+
+  if (!line) return "";
+
+  return line
+    .slice(line.indexOf("=") + 1)
+    .trim()
+    .replace(/^['"]|['"]$/g, "");
+}
+
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
+export default defineConfig(({ mode }) => {
+  const demoUrl = process.env.VITE_DEMO_URL || readEnvValue(mode, "VITE_DEMO_URL");
+
+  return {
+  lang: "zh-CN",
   markdown: {
     config(md) {
       md.use(MermaidMarkdown);
     },
   },
   srcDir: "docs",
-  title: "智行租赁",
-  description: "",
+  title: siteTitle,
+  titleTemplate: `:title | ${siteTitle}`,
+  description: siteDescription,
+  head: [
+    ["meta", { name: "keywords", content: siteKeywords }],
+    ["meta", { name: "author", content: "成都雷耳兔科技有限公司" }],
+    [
+      "meta",
+      {
+        name: "theme-color",
+        content: "#ffffff",
+        media: "(prefers-color-scheme: light)",
+      },
+    ],
+    [
+      "meta",
+      {
+        name: "theme-color",
+        content: "#111827",
+        media: "(prefers-color-scheme: dark)",
+      },
+    ],
+    ["link", { rel: "icon", href: "/favicon.ico" }],
+    ["link", { rel: "apple-touch-icon", href: "/logo.png" }],
+    [
+      "script",
+      { type: "application/ld+json" },
+      JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+    ],
+  ],
+  sitemap: {
+    hostname: siteUrl,
+    transformItems(items) {
+      return items.filter(({ url }) => {
+        return (
+          !url.endsWith("api-examples.html") &&
+          !url.endsWith("markdown-examples.html")
+        );
+      });
+    },
+  },
+  transformHead({ pageData, title, description }) {
+    const pageUrl = `${siteUrl}${getPagePath(pageData.relativePath)}`;
+    const robots = noindexPages.has(pageData.relativePath)
+      ? "noindex,nofollow"
+      : "index,follow";
+    const pageTitle =
+      title || `${siteTitle} - 懂业务的汽车租赁数字化运营中枢`;
+    const pageDescription = description || siteDescription;
+
+    return [
+      ["link", { rel: "canonical", href: pageUrl }],
+      ["meta", { name: "robots", content: robots }],
+      ["meta", { property: "og:type", content: "website" }],
+      ["meta", { property: "og:locale", content: "zh_CN" }],
+      ["meta", { property: "og:site_name", content: siteTitle }],
+      ["meta", { property: "og:title", content: pageTitle }],
+      ["meta", { property: "og:description", content: pageDescription }],
+      ["meta", { property: "og:url", content: pageUrl }],
+      ["meta", { property: "og:image", content: `${siteUrl}/logo.png` }],
+      ["meta", { name: "twitter:card", content: "summary" }],
+      ["meta", { name: "twitter:title", content: pageTitle }],
+      ["meta", { name: "twitter:description", content: pageDescription }],
+      ["meta", { name: "twitter:image", content: `${siteUrl}/logo.png` }],
+    ];
+  },
   themeConfig: {
     search: {
       provider: "local",
@@ -29,7 +160,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: "首页", link: "/" },
-      { text: "演示站点", link: "https://h5-demo.rc1.le2.fun/" },
+      { text: "演示站点", link: demoUrl },
     ],
 
     // sidebar: [
@@ -201,6 +332,9 @@ export default defineConfig({
   },
 
   vite: {
+    define: {
+      "import.meta.env.VITE_DEMO_URL": JSON.stringify(demoUrl),
+    },
     plugins: [MermaidPlugin()],
     optimizeDeps: {
       include: ["mermaid"], // 只预构建 mermaid
@@ -213,4 +347,5 @@ export default defineConfig({
       host: "0.0.0.0", // 如果需要对局域网开放，也可以加上 host
     },
   },
+  };
 });

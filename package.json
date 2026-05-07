@@ -12,6 +12,7 @@
     "debug": "^4.4.3",
     "markdown-it-mermaid": "^0.2.5",
     "mermaid": "^11.14.0",
+    "sass": "^1.99.0",
     "vitepress": "^1.6.4",
     "vitepress-plugin-mermaid": "^2.0.17"
   }
