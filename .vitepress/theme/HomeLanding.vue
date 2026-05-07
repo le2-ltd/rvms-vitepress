@@ -86,7 +86,10 @@
       </div>
     </section>
 
-    <section class="figma-section figma-section--cream">
+    <section
+      class="figma-section"
+      :class="isDark ? 'figma-section--lilac' : 'figma-section--soft'"
+    >
       <div class="figma-wrap">
         <div class="figma-section__head">
           <div>
@@ -142,7 +145,7 @@
       </div>
     </section>
 
-    <section class="figma-section figma-section--lilac" aria-labelledby="capability-title">
+    <section class="figma-section figma-section--cream" aria-labelledby="capability-title">
       <div class="figma-wrap">
         <div class="figma-section__head">
           <div>
@@ -163,7 +166,11 @@
       </div>
     </section>
 
-    <section class="figma-section figma-section--navy" aria-labelledby="roles-title">
+    <section
+      class="figma-section"
+      :class="isDark ? 'figma-section--navy' : 'figma-section--soft'"
+      aria-labelledby="roles-title"
+    >
       <div class="figma-wrap">
         <div class="figma-section__head">
           <div>
@@ -190,7 +197,7 @@
       </div>
     </section>
 
-    <section class="figma-section figma-section--pink" aria-labelledby="plans-title">
+    <section class="figma-section figma-section--soft" aria-labelledby="plans-title">
       <div class="figma-wrap">
         <div class="figma-section__head">
           <div>
