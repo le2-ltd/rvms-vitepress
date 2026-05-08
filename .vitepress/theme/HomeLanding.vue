@@ -62,25 +62,56 @@
 
         <div class="figma-product" aria-label="智行租赁运营看板示意">
           <div class="figma-product__top">
+            <i aria-hidden="true"></i>
             <span>Dashboard</span>
+            <b>console.le2.fun</b>
             <strong>智行租赁</strong>
-            <em>在线协同</em>
           </div>
           <div class="figma-product__body">
-            <div class="figma-product__metrics">
-              <article v-for="item in dashboard.metrics" :key="item.title" class="figma-card">
-                <span class="figma-label">{{ item.label }}</span>
-                <strong>{{ item.title }}</strong>
-                <p>{{ item.text }}</p>
-              </article>
-            </div>
-            <div class="figma-product__cards">
-              <article v-for="item in dashboard.cards" :key="item.title" class="figma-card">
-                <span class="figma-label">{{ item.label }}</span>
-                <strong>{{ item.title }}</strong>
-                <p>{{ item.text }}</p>
-              </article>
-            </div>
+            <nav class="figma-product__nav" aria-label="示意导航">
+              <span v-for="item in dashboard.nav" :key="item">{{ item }}</span>
+            </nav>
+            <main class="figma-product__main">
+              <div class="figma-product__toolbar">
+                <div>
+                  <span class="figma-label">订单工作台</span>
+                  <strong>今日运营概览</strong>
+                </div>
+                <em>在线协同</em>
+              </div>
+              <div class="figma-product__metrics" aria-label="运营指标">
+                <article v-for="item in dashboard.metrics" :key="item.title">
+                  <span>{{ item.label }}</span>
+                  <strong>{{ item.title }}</strong>
+                  <em>{{ item.text }}</em>
+                </article>
+              </div>
+              <div class="figma-product__workspace">
+                <section class="figma-product__table" aria-label="订单列表">
+                  <div class="figma-product__table-head">
+                    <span>订单</span>
+                    <span>节点</span>
+                    <span>状态</span>
+                  </div>
+                  <div v-for="item in dashboard.orders" :key="item.name" class="figma-product__row">
+                    <strong>{{ item.name }}</strong>
+                    <span>{{ item.stage }}</span>
+                    <em>{{ item.status }}</em>
+                  </div>
+                </section>
+                <aside class="figma-product__tasks" aria-label="待办摘要">
+                  <div v-for="item in dashboard.tasks" :key="item.label">
+                    <span class="figma-label">{{ item.label }}</span>
+                    <strong>{{ item.title }}</strong>
+                    <p>{{ item.text }}</p>
+                  </div>
+                </aside>
+              </div>
+              <div class="figma-product__activity" aria-label="最近状态回写">
+                <span class="figma-label">状态回写</span>
+                <p v-for="item in dashboard.activity" :key="item">{{ item }}</p>
+              </div>
+            </main>
           </div>
         </div>
       </div>
@@ -226,7 +257,7 @@
                 <span class="figma-label">{{ plans.next.contact.label }}</span>
                 <p>{{ plans.next.contact.text }}</p>
               </div>
-              <img :src="wechatQrSrc" alt="智行租赁微信联系方式二维码" />
+              <img src="/images/wechat-contact.png" alt="智行租赁微信联系方式二维码" />
             </article>
             <article class="figma-card">
               <span class="figma-label">{{ plans.next.evaluate.label }}</span>
@@ -244,8 +275,8 @@
     </section>
 
     <footer class="figma-footer">
-      <a href="http://beian.miit.gov.cn" target="_blank" rel="noreferrer">蜀ICP备2024116916号-3</a>
-      <p>Copyright © 2021-{{ currentYear }} Le2.ltd 版权所有</p>
+      <div v-if="footer?.message" v-html="footer.message"></div>
+      <p v-if="footer?.copyright">{{ footer.copyright }}</p>
     </footer>
   </section>
 </template>
@@ -254,9 +285,8 @@
 import { useData } from 'vitepress'
 
 const demoUrl = import.meta.env.VITE_DEMO_URL
-const wechatQrSrc = '/images/wechat-contact.png'
-const { isDark } = useData()
-const currentYear = new Date().getFullYear()
+const { isDark, theme } = useData()
+const footer = theme.value.footer
 
 const hero = {
   eyebrow: '智行租赁',
@@ -275,16 +305,27 @@ const toggleTheme = () => {
 
 const dashboard = {
   tags: ['车辆资产', '租赁订单', '财务收付', '风控留痕', '合同单据', '企业微信通知', '租客端小程序', '独立部署'],
+  nav: ['首页', '订单', '车辆', '财务', '风控'],
   metrics: [
     { label: '在租车辆', title: '128', text: '+12%' },
     { label: '待处理订单', title: '36', text: '今日' },
     { label: '风险提醒', title: '09', text: '需跟进' }
   ],
-  cards: [
-    { label: '订单状态流', title: '36 单待推进', text: '签约、出车、退车结算按节点回写。' },
-    { label: '车辆风险', title: '09 项需跟进', text: '年检、保险、违章和证照集中提醒。' },
-    { label: '财务对账', title: '收支可核', text: '租金、押金、退款和收据统一归集。' },
-    { label: '消息触达', title: '自动提醒', text: '企业微信把待办推送给责任人。' }
+  orders: [
+    { name: '川A782', stage: '待出车', status: '验车' },
+    { name: '川A921', stage: '用车中', status: '跟踪' },
+    { name: '川A816', stage: '退车', status: '结算' },
+    { name: '川A530', stage: '续租', status: '待确认' }
+  ],
+  tasks: [
+    { label: '风险待办', title: '09 项', text: '年检 / 保险 / 违章' },
+    { label: '财务摘要', title: '收支可核', text: '租金 / 押金 / 退款' },
+    { label: '消息触达', title: '自动提醒', text: '推送给责任人' }
+  ],
+  activity: [
+    '退车结算回写订单',
+    '证照提醒已发送',
+    '押金退款待复核'
   ]
 }
 
@@ -376,4 +417,983 @@ const plans = {
 }
 </script>
 
-<style scoped lang="scss" src="./HomeLanding.scss"></style>
+<style scoped lang="scss">
+$light-vars: (
+  "canvas": #ffffff, "ink": #000000, "muted": rgba(0, 0, 0, 0.62), "soft": #f7f7f5,
+  "card": #ffffff, "hairline": #e6e6e6, "hairline-strong": rgba(0, 0, 0, 0.18), "primary": #000000,
+  "on-primary": #ffffff, "secondary": #ffffff, "on-secondary": #000000, "magenta": #ff3d8b, "on-magenta": #ffffff,
+  "block-cream": #f4ecd6, "block-lilac": #c5b0f4, "block-pink": #efd4d4, "block-navy": #1f1d3d,
+  "on-block": #000000, "on-navy": #ffffff, "panel-card": rgba(255, 255, 255, 0.34),
+  "card-hover": #fbfbfa, "soft-hover": #efefec, "panel-card-hover": rgba(255, 255, 255, 0.46),
+  "hairline-stronger": rgba(0, 0, 0, 0.26), "primary-hover": #161616, "secondary-hover": #f2f2ef, "magenta-hover": #ff5a9d
+);
+
+$dark-vars: (
+  "canvas": #050505, "ink": #f7f7f5, "muted": rgba(247, 247, 245, 0.68), "soft": #111111,
+  "card": #0d0d0d, "hairline": rgba(255, 255, 255, 0.14), "hairline-strong": rgba(255, 255, 255, 0.24), "primary": #ffffff,
+  "on-primary": #000000, "secondary": #050505, "on-secondary": #ffffff, "magenta": #ff3d8b, "on-magenta": #ffffff,
+  "block-cream": #242015, "block-lilac": #241f37, "block-pink": #2b1f23, "block-navy": #17152e,
+  "on-block": #ffffff, "on-navy": #ffffff, "panel-card": rgba(255, 255, 255, 0.07),
+  "card-hover": #141414, "soft-hover": #171717, "panel-card-hover": rgba(255, 255, 255, 0.1),
+  "hairline-stronger": rgba(255, 255, 255, 0.34), "primary-hover": #ecece8, "secondary-hover": #111111, "magenta-hover": #ff5a9d
+);
+
+$bp-desktop: 1080px;
+$bp-mobile: 768px;
+
+@mixin emit-vars($vars) {
+  @each $name, $value in $vars {
+    --fl-#{$name}: #{$value};
+  }
+}
+
+@mixin card($padding: 20px, $border: var(--fl-hairline-strong)) {
+  border: 1px solid $border;
+  border-radius: 24px;
+  padding: $padding;
+}
+
+@mixin label {
+  display: block;
+  font-family: var(--fl-mono);
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  line-height: 1;
+  opacity: 0.72;
+  text-transform: uppercase;
+}
+
+@mixin copy($size: 17px) {
+  margin-top: 10px;
+  color: currentColor;
+  font-size: $size;
+  font-weight: 320;
+  line-height: 1.4;
+  opacity: 0.72;
+}
+
+:global(:root) {
+  @include emit-vars($light-vars);
+}
+
+:global(html.dark) {
+  @include emit-vars($dark-vars);
+}
+
+.figma-landing {
+  --fl-font: figmaSans, "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --fl-mono: figmaMono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  color: var(--fl-ink);
+  background: var(--fl-canvas);
+  font-family: var(--fl-font);
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  p {
+    margin: 0;
+  }
+}
+
+:global(.Layout:has(.VPContent.is-home) > .VPNav) {
+  display: none !important;
+}
+
+.figma-wrap {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.figma-hero {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  background: var(--fl-canvas);
+
+  &__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.72fr);
+    gap: 56px;
+    align-items: center;
+  }
+
+  h1 {
+    max-width: 780px;
+    font-size: 86px;
+    font-weight: 340;
+    line-height: 1;
+  }
+
+  &__visual {
+    position: relative;
+    display: grid;
+    width: clamp(260px, 29vw, 360px);
+    aspect-ratio: 1;
+    place-items: center;
+    justify-self: end;
+
+    img {
+      position: relative;
+      z-index: 1;
+      width: 72%;
+      height: 72%;
+      object-fit: contain;
+    }
+  }
+
+  &__glow {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background-image: linear-gradient(-45deg, #bd34fe 50%, #47caff 50%);
+    filter: blur(68px);
+    opacity: 0.9;
+  }
+}
+
+.figma-theme-toggle-zone {
+  position: absolute;
+  top: 20px;
+  right: max(12px, calc((100vw - 1180px) / 2 - 12px));
+  z-index: 10;
+  display: grid;
+  width: 72px;
+  height: 72px;
+  place-items: center;
+}
+
+.figma-theme-toggle {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--fl-hairline);
+  border-radius: 9999px;
+  background: var(--fl-card);
+  color: var(--fl-ink);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition:
+    opacity 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease,
+    transform 160ms ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--fl-hairline-strong);
+    background: var(--fl-soft);
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+
+  &__icon {
+    position: relative;
+    display: block;
+    width: 16px;
+    height: 16px;
+
+    &::before,
+    &::after {
+      position: absolute;
+      content: "";
+    }
+
+    &--moon {
+      &::before {
+        inset: 1px;
+        border-radius: 9999px;
+        background: currentColor;
+      }
+
+      &::after {
+        top: -1px;
+        right: -1px;
+        width: 12px;
+        height: 12px;
+        border-radius: 9999px;
+        background: var(--fl-card);
+      }
+    }
+
+    &--sun {
+      &::before {
+        inset: 4px;
+        border-radius: 9999px;
+        background: currentColor;
+      }
+
+      &::after {
+        inset: 0;
+        border-radius: 9999px;
+        background:
+          linear-gradient(currentColor, currentColor) center top / 1.5px 4px no-repeat,
+          linear-gradient(currentColor, currentColor) center bottom / 1.5px 4px no-repeat,
+          linear-gradient(currentColor, currentColor) left center / 4px 1.5px no-repeat,
+          linear-gradient(currentColor, currentColor) right center / 4px 1.5px no-repeat,
+          linear-gradient(currentColor, currentColor) 2px 2px / 1.5px 3px no-repeat,
+          linear-gradient(currentColor, currentColor) calc(100% - 2px) 2px / 1.5px 3px no-repeat,
+          linear-gradient(currentColor, currentColor) 2px calc(100% - 2px) / 1.5px 3px no-repeat,
+          linear-gradient(currentColor, currentColor) calc(100% - 2px) calc(100% - 2px) / 1.5px 3px no-repeat;
+      }
+    }
+  }
+}
+
+.figma-theme-toggle-zone:hover .figma-theme-toggle,
+.figma-theme-toggle-zone:focus-within .figma-theme-toggle,
+.figma-theme-toggle:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.figma-section {
+  padding: 80px 0;
+  background: var(--fl-canvas);
+  color: var(--fl-panel-fg, var(--fl-on-block));
+
+  > .figma-wrap {
+    @include card(40px, transparent);
+    background: var(--fl-panel-bg, var(--fl-soft));
+  }
+
+  &--soft {
+    --fl-panel-bg: var(--fl-soft);
+    --fl-panel-fg: var(--fl-ink);
+  }
+
+  &--cream {
+    --fl-panel-bg: var(--fl-block-cream);
+    --fl-panel-fg: var(--fl-on-block);
+  }
+
+  &--lilac {
+    --fl-panel-bg: var(--fl-block-lilac);
+    --fl-panel-fg: var(--fl-on-block);
+  }
+
+  &--pink {
+    --fl-panel-bg: var(--fl-block-pink);
+    --fl-panel-fg: var(--fl-on-block);
+  }
+
+  &--navy {
+    --fl-panel-bg: var(--fl-block-navy);
+    --fl-panel-fg: var(--fl-on-navy);
+  }
+
+  h2,
+  h3 {
+    font-size: 48px;
+    font-weight: 340;
+    line-height: 1.05;
+  }
+
+  &__head,
+  .figma-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.8fr);
+    gap: 40px;
+    align-items: start;
+  }
+
+  &__head {
+    margin-bottom: 32px;
+  }
+}
+
+.figma-grid {
+  display: grid;
+  gap: 12px;
+
+  &--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  &--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  &--4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  &--6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  &--mt {
+    margin-top: 12px;
+  }
+}
+
+.figma-card {
+  @include card;
+  min-width: 0;
+  background: var(--fl-panel-card);
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    transform 160ms ease;
+
+  h4,
+  strong {
+    display: block;
+    margin-top: 16px;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  p {
+    @include copy;
+  }
+
+  &--contact {
+    display: grid;
+    grid-template-columns: 1fr 96px;
+    gap: 16px;
+    align-items: center;
+
+    img {
+      width: 96px;
+      height: 96px;
+      border: 1px solid var(--fl-hairline);
+      border-radius: 8px;
+      background: #ffffff;
+      object-fit: contain;
+    }
+  }
+
+  &--numbered {
+    position: relative;
+    overflow: hidden;
+    min-height: 208px;
+
+    > *:not(.figma-card__index) {
+      position: relative;
+      z-index: 1;
+    }
+
+    h4,
+    strong {
+      margin-top: 74px;
+    }
+  }
+
+  &__index {
+    position: absolute;
+    top: 18px;
+    left: 22px;
+    width: calc(100% - 44px);
+    font-family: var(--fl-mono);
+    font-size: clamp(54px, 5vw, 80px);
+    letter-spacing: -3px;
+    line-height: 0.85;
+    opacity: 0.1;
+    pointer-events: none;
+  }
+}
+
+.figma-label {
+  @include label;
+}
+
+.figma-copy {
+  @include copy(18px);
+  max-width: 780px;
+}
+
+.figma-intro {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+
+  .figma-copy,
+  .figma-actions,
+  .figma-tags {
+    margin-top: 0;
+  }
+}
+
+.figma-actions,
+.figma-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.figma-button,
+.figma-tags span {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  text-decoration: none;
+}
+
+.figma-button {
+  min-height: 44px;
+  justify-content: center;
+  border: 1px solid transparent;
+  padding: 9px 18px;
+  font-size: 18px;
+  font-weight: 480;
+  line-height: 1.4;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+
+  &--primary {
+    background: var(--fl-primary);
+    color: var(--fl-on-primary);
+  }
+
+  &--secondary {
+    border-color: var(--fl-hairline-strong);
+    background: var(--fl-secondary);
+    color: var(--fl-on-secondary);
+  }
+
+  &--magenta {
+    background: var(--fl-magenta);
+    color: var(--fl-on-magenta);
+  }
+}
+
+.figma-tags span {
+  border: 1px solid var(--fl-hairline-strong);
+  padding: 5px 10px;
+  background: transparent;
+  color: currentColor;
+  font-size: 13px;
+  font-weight: 480;
+  line-height: 1.3;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.figma-product {
+  overflow: hidden;
+  border: 1px solid var(--fl-hairline);
+  border-radius: 24px;
+  background: var(--fl-card);
+  color: var(--fl-ink);
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease;
+
+  &__top {
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
+    gap: 12px;
+    align-items: center;
+    min-height: 52px;
+    padding: 0 16px;
+    border-bottom: 1px solid var(--fl-hairline);
+
+    i {
+      width: 34px;
+      height: 10px;
+      border-radius: 9999px;
+      background:
+        radial-gradient(circle at 5px 50%, var(--fl-muted) 0 3px, transparent 3.5px),
+        radial-gradient(circle at 17px 50%, var(--fl-muted) 0 3px, transparent 3.5px),
+        radial-gradient(circle at 29px 50%, var(--fl-muted) 0 3px, transparent 3.5px);
+      opacity: 0.6;
+    }
+
+    b {
+      justify-self: center;
+      border: 1px solid var(--fl-hairline);
+      border-radius: 9999px;
+      padding: 5px 14px;
+      color: var(--fl-muted);
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1;
+    }
+  }
+
+  &__body {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr);
+    min-height: 438px;
+  }
+
+  &__nav {
+    display: grid;
+    align-content: start;
+    gap: 8px;
+    padding: 16px 12px;
+    border-right: 1px solid var(--fl-hairline);
+    background: color-mix(in srgb, var(--fl-soft), transparent 20%);
+
+    span {
+      border-radius: 9999px;
+      padding: 8px 10px;
+      color: var(--fl-muted);
+      font-family: var(--fl-font);
+      font-size: 13px;
+      font-weight: 480;
+      letter-spacing: 0;
+      line-height: 1;
+      text-transform: none;
+
+      &:first-child {
+        background: var(--fl-panel-card);
+        color: var(--fl-ink);
+      }
+    }
+  }
+
+  &__main {
+    display: grid;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  &__toolbar,
+  &__metrics,
+  &__workspace,
+  &__activity {
+    display: grid;
+  }
+
+  &__toolbar {
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+
+    strong {
+      margin-top: 6px;
+      font-size: 20px;
+    }
+  }
+
+  &__metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+
+    article {
+      border: 1px solid var(--fl-hairline);
+      border-radius: 14px;
+      padding: 10px;
+      background: var(--fl-panel-card);
+    }
+  }
+
+  &__workspace {
+    grid-template-columns: minmax(0, 1fr) 144px;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  &__table,
+  &__tasks,
+  &__activity {
+    border: 1px solid var(--fl-hairline);
+    border-radius: 16px;
+    background: var(--fl-panel-card);
+  }
+
+  &__table {
+    overflow: hidden;
+  }
+
+  &__table-head,
+  &__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 52px 52px;
+    gap: 8px;
+    align-items: center;
+    padding: 10px 12px;
+  }
+
+  &__table-head {
+    border-bottom: 1px solid var(--fl-hairline);
+    color: var(--fl-muted);
+    font-family: var(--fl-mono);
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  &__row {
+    min-height: 38px;
+
+    + .figma-product__row {
+      border-top: 1px solid var(--fl-hairline);
+    }
+
+    strong,
+    span,
+    em {
+      overflow: hidden;
+      margin-top: 0;
+      font-family: var(--fl-font);
+      font-size: 12px;
+      font-weight: 480;
+      letter-spacing: 0;
+      line-height: 1.2;
+      text-overflow: ellipsis;
+      text-transform: none;
+      white-space: nowrap;
+    }
+  }
+
+  &__tasks {
+    display: grid;
+    align-content: start;
+    padding: 12px;
+
+    div + div {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--fl-hairline);
+    }
+  }
+
+  &__activity {
+    grid-template-columns: auto repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    align-items: center;
+    padding: 10px 12px;
+  }
+
+  span,
+  em {
+    @include label;
+    color: var(--fl-muted);
+    font-style: normal;
+  }
+
+  strong {
+    display: block;
+    margin-top: 4px;
+    font-size: 18px;
+    font-weight: 540;
+    line-height: 1.25;
+  }
+
+  p {
+    margin-top: 4px;
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  &__tasks strong {
+    font-size: 16px;
+  }
+}
+
+.figma-workflow {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.figma-next {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr;
+  margin-top: 32px;
+  @include card(24px);
+  background: var(--fl-panel-card);
+
+  .figma-button {
+    width: 100%;
+    margin-top: 12px;
+  }
+
+  h3 {
+    font-size: 44px;
+  }
+}
+
+.figma-footer {
+  display: grid;
+  gap: 4px;
+  padding: 36px 24px 44px;
+  border-top: 1px solid var(--fl-hairline);
+  background: var(--fl-canvas);
+  color: var(--fl-muted);
+  font-size: 14px;
+  font-weight: 330;
+  line-height: 1.7;
+  text-align: center;
+
+  a {
+    color: currentColor;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+}
+
+.figma-button:focus-visible,
+.figma-card:focus-visible,
+.figma-product:focus-visible,
+.figma-tags span:focus-visible {
+  outline: none;
+}
+
+@media (min-width: $bp-mobile) {
+  .figma-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .figma-hero__inner {
+    grid-template-columns: minmax(0, 0.82fr) minmax(320px, 0.68fr);
+  }
+
+  .figma-section .figma-split {
+    grid-template-columns: minmax(0, 0.76fr) minmax(500px, 0.84fr);
+    align-items: center;
+  }
+
+  .figma-product {
+    width: min(100%, 720px);
+    justify-self: center;
+  }
+
+  .figma-hero {
+    &__inner {
+      gap: 36px;
+    }
+
+    h1 {
+      max-width: 720px;
+      font-size: 56px;
+    }
+
+    &__visual {
+      width: 320px;
+      justify-self: end;
+    }
+  }
+
+  .figma-copy {
+    max-width: 100%;
+  }
+
+  .figma-section {
+    h2,
+    h3 {
+      font-size: 42px;
+    }
+
+    &__head {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .figma-grid--4,
+  .figma-grid--6 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: $bp-mobile) {
+  .figma-wrap {
+    width: min(100%, calc(100% - 32px));
+  }
+
+  .figma-hero h1 {
+    font-size: 44px;
+  }
+
+  .figma-hero__inner,
+  .figma-section .figma-split {
+    grid-template-columns: 1fr;
+  }
+
+  .figma-hero__visual {
+    width: 220px;
+    justify-self: center;
+  }
+
+  .figma-section {
+    padding: 56px 0;
+
+    > .figma-wrap {
+      padding: 40px 16px;
+    }
+
+    h2,
+    h3 {
+      font-size: 34px;
+    }
+  }
+
+  .figma-grid,
+  .figma-section .figma-section__head {
+    grid-template-columns: 1fr;
+  }
+
+  .figma-product__workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .figma-product {
+    &__body {
+      grid-template-columns: 1fr;
+      gap: 10px;
+      padding: 16px;
+    }
+
+    &__top {
+      grid-template-columns: auto 1fr auto;
+      min-height: 54px;
+      padding: 0 16px;
+
+      b {
+        display: none;
+      }
+    }
+
+    &__nav {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 6px;
+      border-right: 0;
+      border-bottom: 1px solid var(--fl-hairline);
+      padding: 10px;
+
+      span {
+        padding: 7px 6px;
+        text-align: center;
+      }
+    }
+
+    &__metrics {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+
+      article {
+        padding: 10px;
+      }
+
+      strong {
+        font-size: 18px;
+      }
+
+      p {
+        font-size: 13px;
+      }
+    }
+
+    &__activity {
+      grid-template-columns: 1fr;
+    }
+
+    &__table-head,
+    &__row {
+      grid-template-columns: minmax(0, 1fr) 58px 54px;
+    }
+  }
+
+  .figma-copy {
+    font-size: 16px;
+  }
+
+  .figma-card--numbered {
+    min-height: 190px;
+  }
+
+  .figma-card--contact {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (hover: none) {
+  .figma-theme-toggle-zone {
+    top: 20px;
+    right: max(12px, calc((100vw - 1180px) / 2 - 12px));
+  }
+
+  .figma-theme-toggle {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+}
+
+@media (hover: hover) {
+  .figma-theme-toggle:hover,
+  .figma-theme-toggle:focus-visible {
+    border-color: var(--fl-hairline-stronger);
+    background: var(--fl-card-hover);
+  }
+
+  .figma-button:hover,
+  .figma-button:focus-visible {
+    transform: translateY(-1px);
+  }
+
+  .figma-button--primary:hover,
+  .figma-button--primary:focus-visible {
+    background: var(--fl-primary-hover);
+  }
+
+  .figma-button--secondary:hover,
+  .figma-button--secondary:focus-visible {
+    border-color: var(--fl-hairline-stronger);
+    background: var(--fl-secondary-hover);
+  }
+
+  .figma-button--magenta:hover,
+  .figma-button--magenta:focus-visible {
+    background: var(--fl-magenta-hover);
+  }
+
+  .figma-card:hover,
+  .figma-card:focus-within {
+    border-color: var(--fl-hairline-stronger);
+    background: var(--fl-panel-card-hover);
+    transform: translateY(-2px);
+  }
+
+  .figma-card--numbered:hover,
+  .figma-card--numbered:focus-within,
+  .figma-card--contact:hover,
+  .figma-card--contact:focus-within,
+  .figma-product .figma-card:hover,
+  .figma-product .figma-card:focus-within {
+    transform: translateY(-1px);
+  }
+
+  .figma-product:hover,
+  .figma-product:focus-within {
+    border-color: var(--fl-hairline-stronger);
+    background: var(--fl-card-hover);
+  }
+
+  .figma-tags span:hover {
+    border-color: var(--fl-hairline-stronger);
+    background: var(--fl-soft-hover);
+    transform: translateY(-1px);
+  }
+}
+</style>

@@ -11,38 +11,6 @@ const siteKeywords =
   "汽车租赁系统,租车管理系统,汽车租赁管理软件,车队管理系统,租赁订单管理,车辆管理系统,租车财务管理,违章年检管理,智行租赁";
 const noindexPages = new Set(["api-examples.md", "markdown-examples.md"]);
 
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: siteTitle,
-  alternateName: "智行租赁汽车租赁管理系统",
-  applicationCategory: "BusinessApplication",
-  operatingSystem: "Web, WeChat Mini Program",
-  url: siteUrl,
-  description: siteDescription,
-  publisher: {
-    "@type": "Organization",
-    name: "成都雷耳兔科技有限公司",
-    url: siteUrl,
-  },
-  offers: {
-    "@type": "AggregateOffer",
-    priceCurrency: "CNY",
-    lowPrice: "1300",
-    offerCount: "3",
-    url: `${siteUrl}/overview/version-introduction.html`,
-  },
-  featureList: [
-    "车辆全生命周期管理",
-    "租赁订单闭环管理",
-    "收付款与押金管理",
-    "违章年检同步",
-    "证件 OCR 识别",
-    "企业微信消息提醒",
-    "角色权限与操作留痕",
-  ],
-};
-
 function getPagePath(relativePath) {
   if (!relativePath || relativePath === "index.md") return "/";
   return `/${relativePath.replace(/(^|\/)index\.md$/, "$1").replace(/\.md$/, ".html")}`;
@@ -101,11 +69,6 @@ export default defineConfig(({ mode }) => {
     ],
     ["link", { rel: "icon", href: "/favicon.ico" }],
     ["link", { rel: "apple-touch-icon", href: "/logo.png" }],
-    [
-      "script",
-      { type: "application/ld+json" },
-      JSON.stringify(structuredData).replace(/</g, "\\u003c"),
-    ],
   ],
   sitemap: {
     hostname: siteUrl,
@@ -334,6 +297,13 @@ export default defineConfig(({ mode }) => {
   vite: {
     define: {
       "import.meta.env.VITE_DEMO_URL": JSON.stringify(demoUrl),
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: "modern",
+        },
+      },
     },
     plugins: [MermaidPlugin()],
     optimizeDeps: {
