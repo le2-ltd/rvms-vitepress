@@ -6,3 +6,5 @@ unpackage/
 .vitepress/dist/
 pnpm-lock.yaml
 pnpm-workspace.yaml
+.pnpm-store/
+.env

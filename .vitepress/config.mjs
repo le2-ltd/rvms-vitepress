@@ -4,8 +4,8 @@ import { existsSync, readFileSync } from "node:fs";
 import { MermaidMarkdown, MermaidPlugin } from "vitepress-plugin-mermaid";
 
 const siteUrl = "https://rvms.le2.fun";
-const siteTitle = "智行租赁";
-const siteDescription =
+const siteName = "智行租赁";
+const defaultDescription =
   "智行租赁是面向汽车租赁公司的数字化运营系统，统一管理车辆、司机、客户、订单、合同、财务、风控、消息提醒与图片留痕，帮助门店、车管、财务和管理层高效协同。";
 const siteKeywords =
   "汽车租赁系统,租车管理系统,汽车租赁管理软件,车队管理系统,租赁订单管理,车辆管理系统,租车财务管理,违章年检管理,智行租赁";
@@ -45,9 +45,9 @@ export default defineConfig(({ mode }) => {
     },
   },
   srcDir: "docs",
-  title: siteTitle,
-  titleTemplate: `:title | ${siteTitle}`,
-  description: siteDescription,
+  title: siteName,
+  titleTemplate: `:title | ${siteName}`,
+  description: defaultDescription,
   head: [
     ["meta", { name: "keywords", content: siteKeywords }],
     ["meta", { name: "author", content: "成都雷耳兔科技有限公司" }],
@@ -87,15 +87,15 @@ export default defineConfig(({ mode }) => {
       ? "noindex,nofollow"
       : "index,follow";
     const pageTitle =
-      title || `${siteTitle} - 懂业务的汽车租赁数字化运营中枢`;
-    const pageDescription = description || siteDescription;
+      title || `${siteName} - 懂业务的汽车租赁数字化运营中枢`;
+    const pageDescription = description || defaultDescription;
 
     return [
       ["link", { rel: "canonical", href: pageUrl }],
       ["meta", { name: "robots", content: robots }],
       ["meta", { property: "og:type", content: "website" }],
       ["meta", { property: "og:locale", content: "zh_CN" }],
-      ["meta", { property: "og:site_name", content: siteTitle }],
+      ["meta", { property: "og:site_name", content: siteName }],
       ["meta", { property: "og:title", content: pageTitle }],
       ["meta", { property: "og:description", content: pageDescription }],
       ["meta", { property: "og:url", content: pageUrl }],
@@ -311,6 +311,9 @@ export default defineConfig(({ mode }) => {
     },
     ssr: {
       noExternal: ["mermaid"],
+    },
+    build: {
+      chunkSizeWarningLimit: 1600,
     },
     server: {
       port: 3000, // 你想要的端口号

@@ -1,7 +1,9 @@
 node_modules/
 .git/
 .github/
+.pnpm-store/
 .vitepress/cache/
 .vitepress/dist/
+content/
 Dockerfile*
 .DS_Store
