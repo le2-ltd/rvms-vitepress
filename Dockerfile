@@ -13,10 +13,10 @@ RUN npm install -g pnpm
 
 WORKDIR /app
 
-COPY package.json ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
-    pnpm install; \
+    pnpm install --frozen-lockfile; \
     pnpm ls
 
 COPY . .
