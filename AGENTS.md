@@ -26,6 +26,7 @@
 - 除非确有必要，不要新增 UI 库。
 - UI、样式、文案等前端小改，优先使用 `make run-dev` 或 `pnpm run docs:dev`，通过热更新和浏览器确认效果。
 - 涉及 VitePress 配置、构建链路、依赖、环境变量、路由或静态资源加载方式等改动时，补跑 `pnpm run docs:build`。
+- 验证UI不使用docker、compose，也不启动docker、compose。 
 - 如果用户明确要求不跑测试或不跑 build，遵从用户要求。
 - 本项目当前没有独立的 `lint` 或 `typecheck` 命令，不要默认假设它们存在。
 - `docs:dev` 是日常反馈路径，`docs:build` 是发布前或配置变更后的完整校验路径。

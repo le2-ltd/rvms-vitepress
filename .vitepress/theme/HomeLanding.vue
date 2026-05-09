@@ -117,10 +117,7 @@
       </div>
     </section>
 
-    <section
-      class="figma-section"
-      :class="isDark ? 'figma-section--lilac' : 'figma-section--soft'"
-    >
+    <section class="figma-section figma-section--soft">
       <div class="figma-wrap">
         <div class="figma-section__head">
           <div>
@@ -176,7 +173,7 @@
       </div>
     </section>
 
-    <section class="figma-section figma-section--cream" aria-labelledby="capability-title">
+    <section class="figma-section figma-section--soft" aria-labelledby="capability-title">
       <div class="figma-wrap">
         <div class="figma-section__head">
           <div>
@@ -185,7 +182,7 @@
           </div>
           <p class="figma-copy">车辆、订单、合同、违章、财务、权限和图片证据链不再分散在多个表格和群聊里。</p>
         </div>
-        <div class="figma-grid figma-grid--4">
+        <div class="figma-grid figma-grid--4 figma-grid--capability">
           <article v-for="item in capabilityMatrix.items" :key="item.title" class="figma-card">
             <h4>{{ item.title }}</h4>
             <p>{{ item.text }}</p>
@@ -197,11 +194,7 @@
       </div>
     </section>
 
-    <section
-      class="figma-section"
-      :class="isDark ? 'figma-section--navy' : 'figma-section--soft'"
-      aria-labelledby="roles-title"
-    >
+    <section class="figma-section figma-section--soft" aria-labelledby="roles-title">
       <div class="figma-wrap">
         <div class="figma-section__head">
           <div>
@@ -275,7 +268,17 @@
     </section>
 
     <footer class="figma-footer">
-      <div v-if="footer?.message" v-html="footer.message"></div>
+      <div v-if="footer?.links?.length">
+        <a
+          v-for="link in footer.links"
+          :key="link.href"
+          :href="link.href"
+          :target="link.target"
+          :rel="link.rel"
+        >
+          {{ link.text }}
+        </a>
+      </div>
       <p v-if="footer?.copyright">{{ footer.copyright }}</p>
     </footer>
   </section>
@@ -422,8 +425,7 @@ $light-vars: (
   "canvas": #ffffff, "ink": #000000, "muted": rgba(0, 0, 0, 0.62), "soft": #f7f7f5,
   "card": #ffffff, "hairline": #e6e6e6, "hairline-strong": rgba(0, 0, 0, 0.18), "primary": #000000,
   "on-primary": #ffffff, "secondary": #ffffff, "on-secondary": #000000, "magenta": #ff3d8b, "on-magenta": #ffffff,
-  "block-cream": #f4ecd6, "block-lilac": #c5b0f4, "block-pink": #efd4d4, "block-navy": #1f1d3d,
-  "on-block": #000000, "on-navy": #ffffff, "panel-card": rgba(255, 255, 255, 0.34),
+  "panel-card": rgba(255, 255, 255, 0.34),
   "card-hover": #fbfbfa, "soft-hover": #efefec, "panel-card-hover": rgba(255, 255, 255, 0.46),
   "hairline-stronger": rgba(0, 0, 0, 0.26), "primary-hover": #161616, "secondary-hover": #f2f2ef, "magenta-hover": #ff5a9d
 );
@@ -432,13 +434,11 @@ $dark-vars: (
   "canvas": #050505, "ink": #f7f7f5, "muted": rgba(247, 247, 245, 0.68), "soft": #111111,
   "card": #0d0d0d, "hairline": rgba(255, 255, 255, 0.14), "hairline-strong": rgba(255, 255, 255, 0.24), "primary": #ffffff,
   "on-primary": #000000, "secondary": #050505, "on-secondary": #ffffff, "magenta": #ff3d8b, "on-magenta": #ffffff,
-  "block-cream": #242015, "block-lilac": #241f37, "block-pink": #2b1f23, "block-navy": #17152e,
-  "on-block": #ffffff, "on-navy": #ffffff, "panel-card": rgba(255, 255, 255, 0.07),
+  "panel-card": rgba(255, 255, 255, 0.07),
   "card-hover": #141414, "soft-hover": #171717, "panel-card-hover": rgba(255, 255, 255, 0.1),
   "hairline-stronger": rgba(255, 255, 255, 0.34), "primary-hover": #ecece8, "secondary-hover": #111111, "magenta-hover": #ff5a9d
 );
 
-$bp-desktop: 1080px;
 $bp-mobile: 768px;
 
 @mixin emit-vars($vars) {
@@ -666,7 +666,7 @@ $bp-mobile: 768px;
 .figma-section {
   padding: 80px 0;
   background: var(--fl-canvas);
-  color: var(--fl-panel-fg, var(--fl-on-block));
+  color: var(--fl-panel-fg, var(--fl-ink));
 
   > .figma-wrap {
     @include card(40px, transparent);
@@ -676,26 +676,6 @@ $bp-mobile: 768px;
   &--soft {
     --fl-panel-bg: var(--fl-soft);
     --fl-panel-fg: var(--fl-ink);
-  }
-
-  &--cream {
-    --fl-panel-bg: var(--fl-block-cream);
-    --fl-panel-fg: var(--fl-on-block);
-  }
-
-  &--lilac {
-    --fl-panel-bg: var(--fl-block-lilac);
-    --fl-panel-fg: var(--fl-on-block);
-  }
-
-  &--pink {
-    --fl-panel-bg: var(--fl-block-pink);
-    --fl-panel-fg: var(--fl-on-block);
-  }
-
-  &--navy {
-    --fl-panel-bg: var(--fl-block-navy);
-    --fl-panel-fg: var(--fl-on-navy);
   }
 
   h2,
@@ -721,10 +701,6 @@ $bp-mobile: 768px;
 .figma-grid {
   display: grid;
   gap: 12px;
-
-  &--2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 
   &--3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1126,10 +1102,6 @@ $bp-mobile: 768px;
     width: 100%;
     margin-top: 12px;
   }
-
-  h3 {
-    font-size: 44px;
-  }
 }
 
 .figma-footer {
@@ -1159,6 +1131,24 @@ $bp-mobile: 768px;
 }
 
 @media (min-width: $bp-mobile) {
+  .figma-landing {
+    height: 100vh;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+  }
+
+  .figma-hero,
+  .figma-section {
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+
+  .figma-footer {
+    scroll-snap-align: end;
+  }
+
   .figma-section {
     min-height: 100vh;
     display: flex;
@@ -1213,6 +1203,14 @@ $bp-mobile: 768px;
   .figma-grid--4,
   .figma-grid--6 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .figma-workflow {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .figma-grid--capability {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 

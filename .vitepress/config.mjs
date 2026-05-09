@@ -279,8 +279,14 @@ export default defineConfig(({ mode }) => {
     // ],
 
     footer: {
-      message:
-        '<a href="http://beian.miit.gov.cn" target="_blank">蜀ICP备2024116916号-3</a>',
+      links: [
+        {
+          text: "蜀ICP备2024116916号-3",
+          href: "http://beian.miit.gov.cn",
+          target: "_blank",
+          rel: "noopener noreferrer",
+        },
+      ],
       // 动态年份
       copyright: `Copyright © 2021-${new Date().getFullYear()} Le2.ltd 版权所有`,
     },
