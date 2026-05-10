@@ -2,11 +2,16 @@ ARG IMAGE_MIRROR
 
 FROM ${IMAGE_MIRROR}node:alpine AS builder
 
+ARG NPM_REGISTRY
+
 WORKDIR /app
 
 COPY package.json package-lock.json ./
+RUN if [ -n "$NPM_REGISTRY" ]; then \
+        npm config set registry "$NPM_REGISTRY"; \
+    fi
 # 如果你用的是 npm，请使用下面两行中的一行（点击注释取消注释）
-RUN npm ci --verbose --registry=https://registry.npmmirror.com
+RUN npm ci --verbose
 # 如果你用的是 yarn，请使用下面这一行
 # RUN yarn install --frozen-lockfile
 # 以下示例假设使用 npm：

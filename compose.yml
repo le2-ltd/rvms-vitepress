@@ -6,7 +6,8 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        APP_ENV: ${APP_ENV}
         IMAGE_MIRROR: ${IMAGE_MIRROR}
+        APK_REPOSITORY: ${APK_REPOSITORY:-}
+        NPM_REGISTRY: ${NPM_REGISTRY:-}
     ports:
       - "${RVMS_VITEPRESS_PORT:-8080}:80"

@@ -19,7 +19,7 @@ run-compose:
 	${DOCKER_COMPOSE} up -d
 
 run-install:
-	npm config set registry https://registry.npmmirror.com
+	if [ -n "$$NPM_REGISTRY" ]; then npm config set registry "$$NPM_REGISTRY"; fi
 	npm install -g pnpm
 	pnpm install
 
