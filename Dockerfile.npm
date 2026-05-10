@@ -1,7 +1,6 @@
-ARG IMAGE_PREFIX
-ARG IMAGE_EXT_PREFIX
+ARG IMAGE_MIRROR
 
-FROM ${IMAGE_EXT_PREFIX}node-alpine AS builder
+FROM ${IMAGE_MIRROR}node:alpine AS builder
 
 WORKDIR /app
 
@@ -22,6 +21,6 @@ RUN npm run docs:build
 
 RUN du -sh /app/docs/.vitepress/dist
 
-FROM ${IMAGE_PREFIX}nginx:latest
+FROM ${IMAGE_MIRROR}nginx:latest
 
 COPY --from=builder /app/docs/.vitepress/dist /app
