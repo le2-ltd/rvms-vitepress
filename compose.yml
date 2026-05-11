@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
       args:
         IMAGE_MIRROR: ${IMAGE_MIRROR}
-        APK_REPOSITORY: ${APK_REPOSITORY:-}
-        NPM_REGISTRY: ${NPM_REGISTRY:-}
+        APK_REPOSITORY: ${APK_REPOSITORY}
+        NPM_REGISTRY: ${NPM_REGISTRY}
     ports:
       - "${RVMS_VITEPRESS_PORT:-8080}:80"
