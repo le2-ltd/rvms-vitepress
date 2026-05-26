@@ -25,7 +25,10 @@
 - 保持样式与当前技术栈一致。
 - 除非确有必要，不要新增 UI 库。
 - UI、样式、文案等前端小改，优先使用 `make run-dev` 或 `pnpm run docs:dev`，通过热更新和浏览器确认效果。
-- 涉及 VitePress 配置、构建链路、依赖、环境变量、路由或静态资源加载方式等改动时，补跑 `pnpm run docs:build`。
+- 纯 Markdown 文档内容修改、错别字修改、说明文字调整，不默认运行 `pnpm run docs:build`。
+- 用户已明确给出 Markdown 文案的删除、替换、合并或局部补充要求时，优先按精确文本处理：一次定位、一次 `apply_patch`、一次关键词残留检查；不要扩大成全文审稿，不要重复通读大段正文，除非发现上下文冲突或用户明确要求整体润色。
+- 涉及 VitePress 配置、构建链路、依赖、环境变量、路由、侧边栏/导航配置、静态资源加载方式，或新增/调整可能影响构建解析的组件/脚本时，补跑 `pnpm run docs:build`。
+- 文案类修改如需预览效果，优先使用 `make run-dev` 或 `pnpm run docs:dev`，不以 build 作为默认验证方式。
 - 验证UI不使用docker、compose，也不启动docker、compose。 
 - 如果用户明确要求不跑测试或不跑 build，遵从用户要求。
 - 本项目当前没有独立的 `lint` 或 `typecheck` 命令，不要默认假设它们存在。

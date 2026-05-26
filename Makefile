@@ -19,10 +19,15 @@ run-compose:
 	${DOCKER_COMPOSE} up -d
 
 run-install:
-	if [ -n "$$NPM_REGISTRY" ]; then npm config set registry "$$NPM_REGISTRY"; fi
-	npm install -g pnpm
+	if [ -n "$$NPM_REGISTRY" ]; then npm config set registry "$$NPM_REGISTRY";npm config get registry; fi
+	if command -v pnpm >/dev/null 2>&1; then pnpm --version; else npm install -g pnpm; fi
 	pnpm install
 
+run-env:
+	env
 
 run-dev:
 	pnpm run docs:dev
+
+run-build:
+	pnpm run docs:build

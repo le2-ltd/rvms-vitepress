@@ -44,15 +44,15 @@
     <section class="figma-section figma-section--soft">
       <div class="figma-wrap figma-split">
         <div class="figma-intro">
-          <p class="figma-label">租赁业务运营中枢</p>
-          <h2>管好车辆、订单、资金和风险</h2>
+          <p class="figma-label">经营视图</p>
+          <h2>车辆在哪，钱到没到，风险谁在跟</h2>
           <p class="figma-copy">
-            从签约收款、验车交付到续租换车、退车结算，关键动作都有状态、凭证和负责人，减少漏单和跨岗位反复确认。
+            不再靠群消息和表格追业务。车辆、订单、收款、押金、违章和到期风险集中在一套系统里，管理层随时看进度，员工按流程处理。
           </p>
           <div class="figma-actions" aria-label="首页落地页操作">
-            <a class="figma-button figma-button--primary" href="/overview/what-features">查看功能</a>
-            <a class="figma-button figma-button--secondary" href="/overview/featured-functions">特色能力</a>
-            <a class="figma-button figma-button--secondary" href="/overview/version-introduction">版本方案</a>
+            <a class="figma-button figma-button--primary" href="/overview/what-features">看核心功能</a>
+            <a class="figma-button figma-button--secondary" href="/overview/featured-functions">看特色能力</a>
+            <a class="figma-button figma-button--secondary" href="/overview/version-introduction">看价格版本</a>
             <a class="figma-button figma-button--magenta" :href="demoUrl" target="_blank" rel="noreferrer">进入演示</a>
           </div>
           <div class="figma-tags" aria-label="核心能力">
@@ -74,10 +74,10 @@
             <main class="figma-product__main">
               <div class="figma-product__toolbar">
                 <div>
-                  <span class="figma-label">订单工作台</span>
-                  <strong>今日运营概览</strong>
+                  <span class="figma-label">经营驾驶舱</span>
+                  <strong>今日经营概览</strong>
                 </div>
-                <em>在线协同</em>
+                <em>风险盯办</em>
               </div>
               <div class="figma-product__metrics" aria-label="运营指标">
                 <article v-for="item in dashboard.metrics" :key="item.title">
@@ -117,19 +117,62 @@
       </div>
     </section>
 
+    <section class="figma-section figma-section--soft" aria-labelledby="digital-key-title">
+      <div class="figma-wrap">
+        <div class="figma-section__head">
+          <div>
+            <p class="figma-label">蓝牙数字钥匙</p>
+            <h3 id="digital-key-title">少交钥匙，也能管住用车权限</h3>
+          </div>
+          <div>
+            <p class="figma-copy">{{ digitalKey.copy }}</p>
+            <div class="figma-actions">
+              <a class="figma-button figma-button--primary" href="/overview/ble-digital-key">了解详情</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="figma-tags" aria-label="蓝牙数字钥匙能力标签">
+          <span v-for="tag in digitalKey.tags" :key="tag">{{ tag }}</span>
+        </div>
+
+        <div class="figma-grid figma-grid--digital-values figma-grid--mt" aria-label="蓝牙数字钥匙运营价值">
+          <article v-for="item in digitalKey.values" :key="item.title" class="figma-card">
+            <span class="figma-label">{{ item.label }}</span>
+            <strong>{{ item.title }}</strong>
+            <p>{{ item.text }}</p>
+          </article>
+        </div>
+
+        <div class="figma-grid figma-grid--3 figma-grid--mt" aria-label="蓝牙数字钥匙首购套餐价格">
+          <article v-for="plan in digitalKey.plans" :key="plan.name" class="figma-card">
+            <span class="figma-label">{{ plan.fit }}</span>
+            <h4>{{ plan.name }}</h4>
+            <strong>{{ plan.price }}</strong>
+            <p>{{ plan.text }}</p>
+          </article>
+          <article class="figma-card">
+            <span class="figma-label">费用说明</span>
+            <strong>首购套餐</strong>
+            <p>{{ digitalKey.note }}</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section class="figma-section figma-section--soft">
       <div class="figma-wrap">
         <div class="figma-section__head">
           <div>
-            <p class="figma-label">经营结果</p>
-            <h3>减少漏单，风险早发现</h3>
+            <p class="figma-label">经营收益</p>
+            <h3>少靠人盯，也能把车和钱管住</h3>
           </div>
           <p class="figma-copy">
-            租前准备、租中跟踪和租后结算都在同一套数据里，异常有提醒、过程有记录、责任可追溯。
+            租前准备、租中跟踪、租后结算都回到系统。该收的钱、该处理的风险、该交付的车辆，都有状态和负责人。
           </p>
         </div>
         <div class="figma-grid figma-grid--4">
-          <article v-for="item in outcomes.items" :key="item.title" class="figma-card figma-card--numbered">
+          <article v-for="item in outcomes.items" :key="item.title" class="figma-card figma-card--numbered figma-card--outcome">
             <span class="figma-card__index">{{ item.index }}</span>
             <h4>{{ item.title }}</h4>
             <p>{{ item.text }}</p>
@@ -149,10 +192,10 @@
       <div class="figma-wrap">
         <div class="figma-section__head">
           <div>
-            <p class="figma-label">业务流程</p>
-            <h3 id="workflow-title">节点接力，责任清楚</h3>
+            <p class="figma-label">业务闭环</p>
+            <h3 id="workflow-title">从接单到退车，不靠群里催</h3>
           </div>
-          <p class="figma-copy">建档、签约、出车、跟踪、续租和结算都回到订单，用系统状态替代口头催办。</p>
+          <p class="figma-copy">销售、财务、车管围绕同一条订单推进，签约、收款、验车、续租和退车都有记录，管理者不用反复追问。</p>
         </div>
 
         <ol class="figma-grid figma-grid--6 figma-workflow">
@@ -177,10 +220,10 @@
       <div class="figma-wrap">
         <div class="figma-section__head">
           <div>
-            <p class="figma-label">能力矩阵</p>
-            <h3 id="capability-title">日常能力，集中复用</h3>
+            <p class="figma-label">可落地能力</p>
+            <h3 id="capability-title">经营关心的事，系统逐项接住</h3>
           </div>
-          <p class="figma-copy">车辆、订单、合同、违章、财务、权限和图片证据链不再分散在多个表格和群聊里。</p>
+          <p class="figma-copy">车辆资产、订单进度、收付款、违章年检、合同证件和证据图片不再分散，经营数据可以直接追到车、订单和责任人。</p>
         </div>
         <div class="figma-grid figma-grid--4 figma-grid--capability">
           <article v-for="item in capabilityMatrix.items" :key="item.title" class="figma-card">
@@ -198,10 +241,10 @@
       <div class="figma-wrap">
         <div class="figma-section__head">
           <div>
-            <p class="figma-label">角色价值</p>
-            <h3 id="roles-title">各岗位看该做的事</h3>
+            <p class="figma-label">岗位协同</p>
+            <h3 id="roles-title">管理层看结果，员工按流程做</h3>
           </div>
-          <p class="figma-copy">管理层看经营健康度，运营看交付进度，财务看资金状态，车管看车辆风险，数据口径保持一致。</p>
+          <p class="figma-copy">管理层看车辆利用、资金回款和风险事项；销售、财务、车管按各自待办推进，所有岗位使用同一套数据口径。</p>
         </div>
 
         <div class="figma-grid figma-grid--4" aria-label="角色工作台摘要">
@@ -226,9 +269,9 @@
         <div class="figma-section__head">
           <div>
             <p class="figma-label">版本与下一步</p>
-            <h3 id="plans-title">按规模选版本</h3>
+            <h3 id="plans-title">按车队规模算账</h3>
           </div>
-          <p class="figma-copy">管理端网页、小程序和租客端都包含在方案内，功能全部开放，不按模块拆售。</p>
+          <p class="figma-copy">按车辆规模选择版本，管理端网页、小程序和租客端都包含在方案内，功能全部开放，不按模块拆售。</p>
         </div>
 
         <div class="figma-grid figma-grid--3">
@@ -292,13 +335,13 @@ const { isDark, theme } = useData()
 const footer = theme.value.footer
 
 const hero = {
-  eyebrow: '智行租赁',
-  title: '懂业务的租赁运营中枢',
-  tagline: '把车辆、司机、订单、财务、风控和消息协同放到同一套工作台里，减少人工同步，管好车辆、资金与风险。',
+  eyebrow: '给租车公司的经营系统',
+  title: '智行租赁',
+  tagline: '把车辆、订单、收款、钥匙和风险放进同一套系统。少靠人工同步，管理层随时看清车在哪里、钱到哪里、风险谁在跟。',
   actions: [
-    { theme: 'secondary', text: '功能一览', link: '/overview/what-features' },
-    { theme: 'primary', text: '特色功能', link: '/overview/featured-functions' },
-    { theme: 'secondary', text: '版本介绍', link: '/overview/version-introduction' }
+    { theme: 'primary', text: '看核心功能', link: '/overview/what-features' },
+    { theme: 'secondary', text: '看特色能力', link: '/overview/featured-functions' },
+    { theme: 'secondary', text: '看价格版本', link: '/overview/version-introduction' }
   ]
 }
 
@@ -307,86 +350,102 @@ const toggleTheme = () => {
 }
 
 const dashboard = {
-  tags: ['车辆资产', '租赁订单', '财务收付', '风控留痕', '合同单据', '企业微信通知', '租客端小程序', '独立部署'],
+  tags: ['车辆利用', '订单进度', '收款押金', '到期风险', '企业微信通知', '蓝牙数字钥匙', '租客端小程序', '专属系统'],
   nav: ['首页', '订单', '车辆', '财务', '风控'],
   metrics: [
-    { label: '在租车辆', title: '128', text: '+12%' },
-    { label: '待处理订单', title: '36', text: '今日' },
-    { label: '风险提醒', title: '09', text: '需跟进' }
+    { label: '在租车辆', title: '128 台', text: '利用率' },
+    { label: '待收款', title: '36 单', text: '今日跟进' },
+    { label: '风险提醒', title: '09 项', text: '需处理' }
   ],
   orders: [
-    { name: '川A782', stage: '待出车', status: '验车' },
-    { name: '川A921', stage: '用车中', status: '跟踪' },
-    { name: '川A816', stage: '退车', status: '结算' },
-    { name: '川A530', stage: '续租', status: '待确认' }
+    { name: '川A782', stage: '待交车', status: '验车' },
+    { name: '川A921', stage: '用车中', status: '定位' },
+    { name: '川A816', stage: '待退车', status: '结算' },
+    { name: '川A530', stage: '待续租', status: '跟进' }
   ],
   tasks: [
-    { label: '风险待办', title: '09 项', text: '年检 / 保险 / 违章' },
-    { label: '财务摘要', title: '收支可核', text: '租金 / 押金 / 退款' },
-    { label: '消息触达', title: '自动提醒', text: '推送给责任人' }
+    { label: '经营关注', title: '今日风险', text: '越界 / 年检 / 违章' },
+    { label: '资金摘要', title: '回款进度', text: '租金 / 押金 / 退款' },
+    { label: '员工待办', title: '责任到人', text: '推送给负责人' }
   ],
   activity: [
-    '退车结算回写订单',
-    '证照提醒已发送',
-    '押金退款待复核'
+    '逾期订单已提醒销售',
+    '越界车辆已通知车管',
+    '押金退款待财务复核'
   ]
 }
 
 const outcomes = {
   items: [
-    { index: '01', title: '在线流转', text: '签约、验车、续租、退车按节点推进。' },
-    { index: '02', title: '回到订单', text: '违章、维修、保养、收付款都能追溯。' },
-    { index: '03', title: '风险早提醒', text: '年检、保险、证照、欠租和违章集中暴露。' },
-    { index: '04', title: '收支可核', text: '应收、实收、押金、退款和凭证统一对账。' }
+    { index: '01', title: '少漏单', text: '签约、验车、续租、退车都有节点状态。' },
+    { index: '02', title: '钱账清楚', text: '租金、押金、退款和凭证统一对账。' },
+    { index: '03', title: '风险提前', text: '年检、保险、证照、欠租和违章提前暴露。' },
+    { index: '04', title: '责任可追', text: '每个异常都能看到订单、车辆和负责人。' }
   ],
   details: [
-    { label: '数据口径', title: '数据口径统一', text: '车辆、订单、财务、风控都回到同一套数据。' },
-    { label: '责任定位', title: '异常责任清楚', text: '逾期、欠租、违章、证照到期能定位责任人。' },
-    { label: '动作留痕', title: '管理动作可追踪', text: '提醒、处理、复核和结算形成记录。' }
+    { label: '经营视图', title: '经营数据一屏看', text: '车辆利用、订单进度、资金状态和风险事项集中呈现。' },
+    { label: '责任定位', title: '异常有人跟', text: '逾期、欠租、违章、证照到期都能定位责任人。' },
+    { label: '过程留痕', title: '纠纷有依据', text: '提醒、处理、复核、验车图片和结算记录可追溯。' }
   ]
 }
 
 const workflow = {
   steps: [
-    { title: '建档', text: '车辆、司机、客户与租赁资料统一归档。' },
-    { title: '签约', text: '合同、证件、费用规则和收款计划进入订单。' },
-    { title: '出车', text: '完成发车验车，图片和交付状态完整留痕。' },
-    { title: '用车跟踪', text: '违章、年检、维修、保养、保险同步跟进。' },
-    { title: '续租 / 换车', text: '变更记录关联原订单，责任关系不断档。' },
-    { title: '退车结算', text: '退车验车、结算审核、押金退款统一归档。' }
+    { title: '建档', text: '车辆、客户、司机和证件资料统一归档。' },
+    { title: '签约收款', text: '合同、费用规则、押金租金进入订单。' },
+    { title: '验车交付', text: '发车验车、图片和交付状态完整留痕。' },
+    { title: '用车风控', text: '违章、年检、保险、定位和风险持续跟进。' },
+    { title: '续租 / 换车', text: '变更记录回到原订单，责任关系不断档。' },
+    { title: '退车结算', text: '退车验车、结算审核和退款统一归档。' }
   ],
   meta: [
-    { label: '参与角色', title: '销售 / 财务 / 车管', text: '每个节点明确负责人，交接状态跟随订单变化。' },
-    { label: '业务产出', title: '订单、验车、收款留痕', text: '合同、图片、费用、违章都能追溯到具体订单。' },
-    { label: '系统价值', title: '减少重复确认', text: '用系统状态替代线下催办，让异常事项更早暴露。' }
+    { label: '参与角色', title: '销售 / 财务 / 车管', text: '每个节点明确负责人，管理者不用逐个追问。' },
+    { label: '业务产出', title: '订单、验车、收款留痕', text: '合同、图片、费用、违章都能追到具体订单。' },
+    { label: '系统价值', title: '少靠人工催办', text: '用系统状态替代群里确认，让异常更早暴露。' }
   ]
 }
 
 const capabilityMatrix = {
   items: [
-    { title: '车辆全生命周期', text: '从建档、证件档案、保险、年检到维修保养，形成完整车辆资产台账。', tags: ['资产台账', '年检保险', '维修保养'] },
-    { title: '租赁订单闭环', text: '签约、出车、换车、续租、退车、结算和财务流水围绕订单流转。', tags: ['订单流转', '换车续租', '退车结算'] },
-    { title: '证件与合同自动化', text: '证件 OCR、合同模板、结算单和收据自动生成，减少重复录入。', tags: ['证件识别', '合同模板', '单据生成'] },
-    { title: '违章年检联动', text: '对接交管 122，定时同步车辆违章与年检结果，并关联订单和司机。', tags: ['交管 122', '自动同步', '司机匹配'] },
-    { title: '财务与押金管理', text: '统一管理租金、押金、退款、收付款流水、收据和结算凭证。', tags: ['收付款', '押金', '结算'] },
-    { title: '风控与消息提醒', text: '年检、保险、证照、欠租和合同到期集中提醒，并通过企业微信触达。', tags: ['风险一览', '企业微信', '提前提醒'] },
-    { title: '权限与操作留痕', text: '按角色控制菜单、按钮和接口权限，关键业务动作可追溯、可审计。', tags: ['角色权限', '按钮控制', '操作审计'] },
-    { title: '图片证据链', text: '验车、维修、保养和出险支持图片留痕，可回溯到车辆和订单。', tags: ['图片留痕', '证据链', '自动清理'] }
+    { title: '车辆资产看得清', text: '车辆档案、保险、年检、维修保养持续沉淀，车况和资产状态一目了然。', tags: ['资产台账', '年检保险', '维修保养'] },
+    { title: '订单进度不脱节', text: '签约、出车、换车、续租、退车和结算围绕订单流转。', tags: ['订单流转', '换车续租', '退车结算'] },
+    { title: '合同证件少录入', text: '证件自动识别、合同模板、结算单和收据自动生成，减少员工重复录入。', tags: ['证件识别', '合同模板', '单据生成'] },
+    { title: '违章年检自动盯', text: '对接交管平台，定时同步违章与年检结果，并关联订单和司机。', tags: ['交管同步', '自动同步', '司机匹配'] },
+    { title: '收款押金可核', text: '租金、押金、退款、收付款流水、收据和结算凭证统一管理。', tags: ['收付款', '押金', '结算'] },
+    { title: '风险消息到群', text: '年检、保险、证照、欠租和合同到期集中提醒，通过企业微信触达。', tags: ['风险一览', '企业微信', '提前提醒'] },
+    { title: '权限留痕防扯皮', text: '按角色控制菜单、按钮和操作权限，关键动作有记录、能追责。', tags: ['角色权限', '按钮控制', '操作留痕'] },
+    { title: '图片证据防纠纷', text: '验车、维修、保养和出险支持图片留痕，遇到争议能回溯证据。', tags: ['图片留痕', '证据链', '自动清理'] }
   ]
+}
+
+const digitalKey = {
+  copy: '租客用微信小程序开关车，系统按订单、付款和退车状态自动授权与取消授权；在线定位、城市电子围栏和企业微信通知同步做车辆风控。设备免破线取电，授权有效期内手机没网也能在车旁蓝牙开关车。',
+  tags: ['168 元/台起', '微信小程序', '蓝牙开关车', '订单自动授权', '免破线取电', '城市电子围栏', '没网也能用车'],
+  values: [
+    { label: '钥匙交接', title: '少交一把实体钥匙', text: '减少门店交接、错交、漏还和钥匙丢失带来的管理成本。' },
+    { label: '权限控制', title: '退车自动收回权限', text: '订单满足条件才授权，退车或订单结束后自动取消租客钥匙。' },
+    { label: '车辆风控', title: '越界及时通知到群', text: '车辆定位、城市电子围栏和企业微信群通知联动。' },
+    { label: '无人值守', title: '支持自助取还车', text: '租客通过微信小程序解锁、上锁、寻车/鸣笛和打开后备箱。' }
+  ],
+  plans: [
+    { name: '1 年套餐', fit: '每台设备', price: '168 元/台', text: '含设备硬件本体、1 年平台服务、1 年流量。' },
+    { name: '3 年套餐', fit: '每台设备', price: '218 元/台', text: '含设备硬件本体、3 年平台服务、3 年流量。' }
+  ],
+  note: '价格不含税、不含运费、不含焊接钥匙费用。'
 }
 
 const roles = {
   board: [
-    { label: '今日待办', title: '待签约 / 待收款 / 待退车' },
-    { label: '风险事项', title: '年检 / 保险 / 违章 / 证照' },
-    { label: '资金跟进', title: '押金 / 租金 / 退款 / 收据' },
-    { label: '消息触达', title: '合同 / 收付款 / 年检 / 续保' }
+    { label: '今日收款', title: '租金 / 押金 / 退款' },
+    { label: '车辆风险', title: '年检 / 保险 / 违章 / 越界' },
+    { label: '交付进度', title: '待签约 / 待出车 / 待退车' },
+    { label: '消息触达', title: '企业微信推送责任人' }
   ],
   items: [
-    { name: '老板 / 管理层', metric: '经营视图', value: '一屏掌握车辆利用、订单进度、资金状态和风险事项。' },
-    { name: '门店运营', metric: '交付任务', value: '按预订、签约、租车、退车、换车、续租处理日常交付。' },
-    { name: '销售人员', metric: '订单状态', value: '持续跟进待签约、已签约、待交付、待续租和待结算客户。' },
-    { name: '财务人员', metric: '资金状态', value: '集中处理押金、租金、退款、收据、付款计划与结算凭证。' },
+    { name: '管理层', metric: '经营视图', value: '看车辆利用、订单进度、资金状态和风险事项。' },
+    { name: '门店运营', metric: '交付任务', value: '按预订、签约、出车、退车、换车、续租推进交付。' },
+    { name: '销售人员', metric: '客户跟进', value: '持续跟进待签约、待交付、待续租和待结算客户。' },
+    { name: '财务人员', metric: '资金状态', value: '处理押金、租金、退款、收据、付款计划与结算凭证。' },
     { name: '车管人员', metric: '车辆风险', value: '跟进年检、保险、维修、保养、出险、违章和验车留痕。' },
     { name: '外部协作方', metric: '授权协同', value: '修理厂、保险协作方按授权查看维修、事故、报价和处理进度。' }
   ]
@@ -394,25 +453,25 @@ const roles = {
 
 const plans = {
   items: [
-    { name: '轻量版', fit: '50 台以内', price: '¥1,300 / 年', text: '覆盖基础运营所需能力。' },
-    { name: '标准版', fit: '400 台以内', price: '¥5,200 / 年', text: '满足多组织协同与精细管理。' },
-    { name: '旗舰版', fit: '400 台以上', price: '¥10 / 台车 / 年', text: '支持更高并发与复杂流程。' }
+    { name: '轻量版', fit: '50 台以内', price: '¥1,300 / 年', text: '小车队先把订单、车辆、收款和风险管起来。' },
+    { name: '标准版', fit: '400 台以内', price: '¥5,200 / 年', text: '适合多岗位协作、门店运营和精细化管理。' },
+    { name: '旗舰版', fit: '400 台以上', price: '¥10 / 台车 / 年', text: '适合更大车队、更多流程和更高并发。' }
   ],
   next: {
-    copy: '理性评估先看功能，想快速感受产品就进演示，也可以扫码咨询演示账号。',
+    copy: '评估时先看功能覆盖，再看价格版本；想快速判断是否适合自己的车队，可以直接进入演示或扫码咨询。',
     contact: {
       label: '微信咨询',
-      text: '扫码领演示账号，咨询价格。'
+      text: '扫码领演示账号，咨询版本和设备方案。'
     },
     evaluate: {
-      label: '理性评估',
-      text: '先确认车辆、订单、财务、风控和租客端能力是否覆盖当前业务。',
-      action: '先看功能',
+      label: '经营评估',
+      text: '先确认车辆、订单、财务、风控、数字钥匙和租客端能力是否覆盖当前业务。',
+      action: '看功能',
       link: '/overview/what-features'
     },
     demo: {
       label: '体验产品',
-      text: '直接进入演示站点，按签约、出车、退车结算体验管理端流程。',
+      text: '直接进入演示站点，按签约、出车、退车结算体验真实业务流。',
       action: '进入演示',
       link: demoUrl
     }
@@ -714,6 +773,10 @@ $bp-mobile: 768px;
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
+  &--digital-values {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
   &--mt {
     margin-top: 12px;
   }
@@ -760,7 +823,7 @@ $bp-mobile: 768px;
   &--numbered {
     position: relative;
     overflow: hidden;
-    min-height: 208px;
+    // min-height: 168px;
 
     > *:not(.figma-card__index) {
       position: relative;
@@ -769,21 +832,36 @@ $bp-mobile: 768px;
 
     h4,
     strong {
-      margin-top: 74px;
+      margin-top: 30px;
     }
   }
 
   &__index {
     position: absolute;
     top: 18px;
-    left: 22px;
+    right: 22px;
+    left: auto;
     width: calc(100% - 44px);
     font-family: var(--fl-mono);
-    font-size: clamp(54px, 5vw, 80px);
+    font-size: clamp(54px, 3vw, 80px);
     letter-spacing: -3px;
     line-height: 0.85;
     opacity: 0.1;
     pointer-events: none;
+    text-align: right;
+  }
+
+  &--outcome {
+    // min-height: 136px;
+
+    h4,
+    strong {
+      margin-top: 12px;
+    }
+
+    .figma-card__index {
+      top: 14px;
+    }
   }
 }
 
@@ -1314,10 +1392,6 @@ $bp-mobile: 768px;
 
   .figma-copy {
     font-size: 16px;
-  }
-
-  .figma-card--numbered {
-    min-height: 190px;
   }
 
   .figma-card--contact {
