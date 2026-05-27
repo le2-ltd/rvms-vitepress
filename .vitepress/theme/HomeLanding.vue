@@ -47,7 +47,7 @@
           <p class="figma-label">经营视图</p>
           <h2>车辆在哪，钱到没到，风险谁在跟</h2>
           <p class="figma-copy">
-            不再靠群消息和表格追业务。车辆、订单、收款、押金、违章和到期风险集中在一套系统里，管理层随时看进度，员工按流程处理。
+            车辆、订单、收款、押金、违章和到期风险，一屏看清。
           </p>
           <div class="figma-actions" aria-label="首页落地页操作">
             <a class="figma-button figma-button--primary" href="/overview/what-features">看核心功能</a>
@@ -119,43 +119,40 @@
 
     <section class="figma-section figma-section--soft" aria-labelledby="digital-key-title">
       <div class="figma-wrap">
-        <div class="figma-section__head">
-          <div>
+        <div class="figma-digital">
+          <div class="figma-digital__main">
             <p class="figma-label">蓝牙数字钥匙</p>
-            <h3 id="digital-key-title">少交钥匙，也能管住用车权限</h3>
-          </div>
-          <div>
+            <h3 id="digital-key-title">不交钥匙，也能管住用车权限</h3>
             <p class="figma-copy">{{ digitalKey.copy }}</p>
+
+            <div class="figma-tags" aria-label="蓝牙数字钥匙能力标签">
+              <span v-for="tag in digitalKey.tags" :key="tag">{{ tag }}</span>
+            </div>
+
+            <div class="figma-digital__body">
+              <div class="figma-feature-list" aria-label="蓝牙数字钥匙运营价值">
+                <div v-for="item in digitalKey.values" :key="item.title" class="figma-feature-list__item">
+                  <span>{{ item.label }}</span>
+                  <strong>{{ item.title }}</strong>
+                  <p>{{ item.text }}</p>
+                </div>
+              </div>
+
+              <aside class="figma-price-strip" aria-label="蓝牙数字钥匙首购套餐价格">
+                <div v-for="plan in digitalKey.plans" :key="plan.name" class="figma-price-strip__row">
+                  <span>{{ plan.name }}</span>
+                  <strong>{{ plan.price }}</strong>
+                  <p>{{ plan.text }}</p>
+                </div>
+                <span class="figma-label">费用说明</span>
+                <p>{{ digitalKey.note }}</p>
+              </aside>
+            </div>
+
             <div class="figma-actions">
               <a class="figma-button figma-button--primary" href="/overview/ble-digital-key">了解详情</a>
             </div>
           </div>
-        </div>
-
-        <div class="figma-tags" aria-label="蓝牙数字钥匙能力标签">
-          <span v-for="tag in digitalKey.tags" :key="tag">{{ tag }}</span>
-        </div>
-
-        <div class="figma-grid figma-grid--digital-values figma-grid--mt" aria-label="蓝牙数字钥匙运营价值">
-          <article v-for="item in digitalKey.values" :key="item.title" class="figma-card">
-            <span class="figma-label">{{ item.label }}</span>
-            <strong>{{ item.title }}</strong>
-            <p>{{ item.text }}</p>
-          </article>
-        </div>
-
-        <div class="figma-grid figma-grid--3 figma-grid--mt" aria-label="蓝牙数字钥匙首购套餐价格">
-          <article v-for="plan in digitalKey.plans" :key="plan.name" class="figma-card">
-            <span class="figma-label">{{ plan.fit }}</span>
-            <h4>{{ plan.name }}</h4>
-            <strong>{{ plan.price }}</strong>
-            <p>{{ plan.text }}</p>
-          </article>
-          <article class="figma-card">
-            <span class="figma-label">费用说明</span>
-            <strong>首购套餐</strong>
-            <p>{{ digitalKey.note }}</p>
-          </article>
         </div>
       </div>
     </section>
@@ -168,19 +165,20 @@
             <h3>少靠人盯，也能把车和钱管住</h3>
           </div>
           <p class="figma-copy">
-            租前准备、租中跟踪、租后结算都回到系统。该收的钱、该处理的风险、该交付的车辆，都有状态和负责人。
+            该收的钱、该处理的风险、该交付的车，都有状态和负责人。
           </p>
         </div>
-        <div class="figma-grid figma-grid--4">
-          <article v-for="item in outcomes.items" :key="item.title" class="figma-card figma-card--numbered figma-card--outcome">
-            <span class="figma-card__index">{{ item.index }}</span>
+        <div class="figma-outcome-list" aria-label="经营收益要点">
+          <article v-for="item in outcomes.items" :key="item.title" class="figma-outcome-list__item">
+            <span>{{ item.index }}</span>
             <h4>{{ item.title }}</h4>
             <p>{{ item.text }}</p>
           </article>
         </div>
-        <div class="figma-grid figma-grid--3 figma-grid--mt" aria-label="经营闭环补充内容">
-          <article v-for="item in outcomes.details" :key="item.title" class="figma-card">
-            <span class="figma-label">{{ item.label }}</span>
+
+        <div class="figma-proof-list" aria-label="经营闭环补充内容">
+          <article v-for="item in outcomes.details" :key="item.title">
+            <span>{{ item.label }}</span>
             <strong>{{ item.title }}</strong>
             <p>{{ item.text }}</p>
           </article>
@@ -195,20 +193,20 @@
             <p class="figma-label">业务闭环</p>
             <h3 id="workflow-title">从接单到退车，不靠群里催</h3>
           </div>
-          <p class="figma-copy">销售、财务、车管围绕同一条订单推进，签约、收款、验车、续租和退车都有记录，管理者不用反复追问。</p>
+          <p class="figma-copy">销售、财务、车管围绕订单推进，管理者不用反复追问。</p>
         </div>
 
-        <ol class="figma-grid figma-grid--6 figma-workflow">
-          <li v-for="(step, index) in workflow.steps" :key="step.title" class="figma-card figma-card--numbered">
-            <span class="figma-card__index">{{ String(index + 1).padStart(2, '0') }}</span>
+        <ol class="figma-timeline" aria-label="业务闭环流程">
+          <li v-for="(step, index) in workflow.steps" :key="step.title">
+            <span>{{ String(index + 1).padStart(2, '0') }}</span>
             <strong>{{ step.title }}</strong>
             <p>{{ step.text }}</p>
           </li>
         </ol>
 
-        <div class="figma-grid figma-grid--3 figma-grid--mt" aria-label="流程补充信息">
-          <article v-for="item in workflow.meta" :key="item.title" class="figma-card">
-            <span class="figma-label">{{ item.label }}</span>
+        <div class="figma-proof-list figma-proof-list--3" aria-label="流程补充信息">
+          <article v-for="item in workflow.meta" :key="item.title">
+            <span>{{ item.label }}</span>
             <strong>{{ item.title }}</strong>
             <p>{{ item.text }}</p>
           </article>
@@ -221,12 +219,12 @@
         <div class="figma-section__head">
           <div>
             <p class="figma-label">可落地能力</p>
-            <h3 id="capability-title">经营关心的事，系统逐项接住</h3>
+            <h3 id="capability-title">经营关心的事，系统接住</h3>
           </div>
-          <p class="figma-copy">车辆资产、订单进度、收付款、违章年检、合同证件和证据图片不再分散，经营数据可以直接追到车、订单和责任人。</p>
+          <p class="figma-copy">车辆、订单、资金、违章、合同和图片证据统一管理。</p>
         </div>
-        <div class="figma-grid figma-grid--4 figma-grid--capability">
-          <article v-for="item in capabilityMatrix.items" :key="item.title" class="figma-card">
+        <div class="figma-capability-list" aria-label="可落地能力清单">
+          <article v-for="item in capabilityMatrix.items" :key="item.title">
             <h4>{{ item.title }}</h4>
             <p>{{ item.text }}</p>
             <div class="figma-tags">
@@ -244,20 +242,20 @@
             <p class="figma-label">岗位协同</p>
             <h3 id="roles-title">管理层看结果，员工按流程做</h3>
           </div>
-          <p class="figma-copy">管理层看车辆利用、资金回款和风险事项；销售、财务、车管按各自待办推进，所有岗位使用同一套数据口径。</p>
+          <p class="figma-copy">管理层看结果，销售、财务、车管按待办推进。</p>
         </div>
 
-        <div class="figma-grid figma-grid--4" aria-label="角色工作台摘要">
-          <article v-for="item in roles.board" :key="item.title" class="figma-card">
-            <span class="figma-label">{{ item.label }}</span>
+        <div class="figma-status-strip" aria-label="角色工作台摘要">
+          <article v-for="item in roles.board" :key="item.title">
+            <span>{{ item.label }}</span>
             <strong>{{ item.title }}</strong>
           </article>
         </div>
 
-        <div class="figma-grid figma-grid--3 figma-grid--mt">
-          <article v-for="role in roles.items" :key="role.name" class="figma-card">
-            <span class="figma-label">{{ role.metric }}</span>
-            <h4>{{ role.name }}</h4>
+        <div class="figma-role-table" aria-label="岗位收益">
+          <article v-for="role in roles.items" :key="role.name">
+            <span>{{ role.metric }}</span>
+            <strong>{{ role.name }}</strong>
             <p>{{ role.value }}</p>
           </article>
         </div>
@@ -271,40 +269,32 @@
             <p class="figma-label">版本与下一步</p>
             <h3 id="plans-title">按车队规模算账</h3>
           </div>
-          <p class="figma-copy">按车辆规模选择版本，管理端网页、小程序和租客端都包含在方案内，功能全部开放，不按模块拆售。</p>
+          <p class="figma-copy">按车辆规模选版本，功能全部开放，不按模块拆售。</p>
         </div>
 
-        <div class="figma-grid figma-grid--3">
-          <article v-for="plan in plans.items" :key="plan.name" class="figma-card">
-            <span class="figma-label">{{ plan.fit }}</span>
-            <h4>{{ plan.name }}</h4>
-            <strong>{{ plan.price }}</strong>
+        <div class="figma-plan-table" aria-label="版本价格对比">
+          <article v-for="plan in plans.items" :key="plan.name">
+            <span>{{ plan.fit }}</span>
+            <strong>{{ plan.name }}</strong>
+            <em>{{ plan.price }}</em>
             <p>{{ plan.text }}</p>
           </article>
         </div>
 
-        <div class="figma-next">
-          <div>
+        <div class="figma-action-strip" aria-label="下一步操作">
+          <div class="figma-action-strip__copy">
             <p class="figma-copy">{{ plans.next.copy }}</p>
           </div>
-          <div class="figma-grid figma-grid--3">
-            <article class="figma-card figma-card--contact">
-              <div>
-                <span class="figma-label">{{ plans.next.contact.label }}</span>
-                <p>{{ plans.next.contact.text }}</p>
-              </div>
-              <img src="/images/wechat-contact.png" alt="智行租赁微信联系方式二维码" />
-            </article>
-            <article class="figma-card">
-              <span class="figma-label">{{ plans.next.evaluate.label }}</span>
-              <p>{{ plans.next.evaluate.text }}</p>
-              <a class="figma-button figma-button--primary" :href="plans.next.evaluate.link">{{ plans.next.evaluate.action }}</a>
-            </article>
-            <article class="figma-card">
-              <span class="figma-label">{{ plans.next.demo.label }}</span>
-              <p>{{ plans.next.demo.text }}</p>
-              <a class="figma-button figma-button--magenta" :href="plans.next.demo.link" target="_blank" rel="noreferrer">{{ plans.next.demo.action }}</a>
-            </article>
+          <div class="figma-action-strip__contact">
+            <img src="/images/wechat-contact.png" alt="智行租赁微信联系方式二维码" />
+            <div>
+              <span>{{ plans.next.contact.label }}</span>
+              <p>{{ plans.next.contact.text }}</p>
+            </div>
+          </div>
+          <div class="figma-action-strip__actions">
+            <a class="figma-button figma-button--primary" :href="plans.next.evaluate.link">{{ plans.next.evaluate.action }}</a>
+            <a class="figma-button figma-button--magenta" :href="plans.next.demo.link" target="_blank" rel="noreferrer">{{ plans.next.demo.action }}</a>
           </div>
         </div>
       </div>
@@ -337,7 +327,7 @@ const footer = theme.value.footer
 const hero = {
   eyebrow: '给租车公司的经营系统',
   title: '智行租赁',
-  tagline: '把车辆、订单、收款、钥匙和风险放进同一套系统。少靠人工同步，管理层随时看清车在哪里、钱到哪里、风险谁在跟。',
+  tagline: '管车辆、管订单、管收款、管风险。少靠人盯，随时看清经营状态。',
   actions: [
     { theme: 'primary', text: '看核心功能', link: '/overview/what-features' },
     { theme: 'secondary', text: '看特色能力', link: '/overview/featured-functions' },
@@ -377,59 +367,59 @@ const dashboard = {
 
 const outcomes = {
   items: [
-    { index: '01', title: '少漏单', text: '签约、验车、续租、退车都有节点状态。' },
-    { index: '02', title: '钱账清楚', text: '租金、押金、退款和凭证统一对账。' },
-    { index: '03', title: '风险提前', text: '年检、保险、证照、欠租和违章提前暴露。' },
-    { index: '04', title: '责任可追', text: '每个异常都能看到订单、车辆和负责人。' }
+    { index: '01', title: '少漏单', text: '每个节点都有状态。' },
+    { index: '02', title: '钱账清楚', text: '租金、押金、退款可对账。' },
+    { index: '03', title: '风险提前', text: '到期、欠租、违章早提醒。' },
+    { index: '04', title: '责任可追', text: '异常能追到车和人。' }
   ],
   details: [
-    { label: '经营视图', title: '经营数据一屏看', text: '车辆利用、订单进度、资金状态和风险事项集中呈现。' },
-    { label: '责任定位', title: '异常有人跟', text: '逾期、欠租、违章、证照到期都能定位责任人。' },
-    { label: '过程留痕', title: '纠纷有依据', text: '提醒、处理、复核、验车图片和结算记录可追溯。' }
+    { label: '经营视图', title: '一屏看经营', text: '车辆、订单、资金、风险集中看。' },
+    { label: '责任定位', title: '异常有人跟', text: '逾期、欠租、违章能定位责任人。' },
+    { label: '过程留痕', title: '纠纷有依据', text: '验车、处理、结算都有记录。' }
   ]
 }
 
 const workflow = {
   steps: [
-    { title: '建档', text: '车辆、客户、司机和证件资料统一归档。' },
-    { title: '签约收款', text: '合同、费用规则、押金租金进入订单。' },
-    { title: '验车交付', text: '发车验车、图片和交付状态完整留痕。' },
-    { title: '用车风控', text: '违章、年检、保险、定位和风险持续跟进。' },
-    { title: '续租 / 换车', text: '变更记录回到原订单，责任关系不断档。' },
-    { title: '退车结算', text: '退车验车、结算审核和退款统一归档。' }
+    { title: '建档', text: '车辆、客户、司机统一归档。' },
+    { title: '签约收款', text: '合同、押金、租金进订单。' },
+    { title: '验车交付', text: '图片、车况、交付留痕。' },
+    { title: '用车风控', text: '定位、违章、年检持续跟。' },
+    { title: '续租 / 换车', text: '变更回到原订单。' },
+    { title: '退车结算', text: '验车、结算、退款归档。' }
   ],
   meta: [
-    { label: '参与角色', title: '销售 / 财务 / 车管', text: '每个节点明确负责人，管理者不用逐个追问。' },
-    { label: '业务产出', title: '订单、验车、收款留痕', text: '合同、图片、费用、违章都能追到具体订单。' },
-    { label: '系统价值', title: '少靠人工催办', text: '用系统状态替代群里确认，让异常更早暴露。' }
+    { label: '参与角色', title: '销售 / 财务 / 车管', text: '节点清楚，不用逐个追问。' },
+    { label: '业务产出', title: '订单、验车、收款留痕', text: '合同、图片、费用都回订单。' },
+    { label: '系统价值', title: '少靠人工催办', text: '异常更早暴露。' }
   ]
 }
 
 const capabilityMatrix = {
   items: [
-    { title: '车辆资产看得清', text: '车辆档案、保险、年检、维修保养持续沉淀，车况和资产状态一目了然。', tags: ['资产台账', '年检保险', '维修保养'] },
-    { title: '订单进度不脱节', text: '签约、出车、换车、续租、退车和结算围绕订单流转。', tags: ['订单流转', '换车续租', '退车结算'] },
-    { title: '合同证件少录入', text: '证件自动识别、合同模板、结算单和收据自动生成，减少员工重复录入。', tags: ['证件识别', '合同模板', '单据生成'] },
-    { title: '违章年检自动盯', text: '对接交管平台，定时同步违章与年检结果，并关联订单和司机。', tags: ['交管同步', '自动同步', '司机匹配'] },
-    { title: '收款押金可核', text: '租金、押金、退款、收付款流水、收据和结算凭证统一管理。', tags: ['收付款', '押金', '结算'] },
-    { title: '风险消息到群', text: '年检、保险、证照、欠租和合同到期集中提醒，通过企业微信触达。', tags: ['风险一览', '企业微信', '提前提醒'] },
-    { title: '权限留痕防扯皮', text: '按角色控制菜单、按钮和操作权限，关键动作有记录、能追责。', tags: ['角色权限', '按钮控制', '操作留痕'] },
-    { title: '图片证据防纠纷', text: '验车、维修、保养和出险支持图片留痕，遇到争议能回溯证据。', tags: ['图片留痕', '证据链', '自动清理'] }
+    { title: '车辆资产看得清', text: '档案、保险、年检、维修统一管。', tags: ['资产台账', '年检保险', '维修保养'] },
+    { title: '订单进度不脱节', text: '签约、出车、续租、退车围绕订单走。', tags: ['订单流转', '换车续租', '退车结算'] },
+    { title: '合同证件少录入', text: '证件识别，合同和单据自动生成。', tags: ['证件识别', '合同模板', '单据生成'] },
+    { title: '违章年检自动盯', text: '违章、年检同步到车和订单。', tags: ['交管同步', '自动同步', '司机匹配'] },
+    { title: '收款押金可核', text: '租金、押金、退款统一对账。', tags: ['收付款', '押金', '结算'] },
+    { title: '风险消息到群', text: '到期、欠租、违章自动提醒。', tags: ['风险一览', '企业微信', '提前提醒'] },
+    { title: '权限留痕防扯皮', text: '按角色授权，关键操作有记录。', tags: ['角色权限', '按钮控制', '操作留痕'] },
+    { title: '图片证据防纠纷', text: '验车、维修、出险图片可回溯。', tags: ['图片留痕', '证据链', '自动清理'] }
   ]
 }
 
 const digitalKey = {
-  copy: '租客用微信小程序开关车，系统按订单、付款和退车状态自动授权与取消授权；在线定位、城市电子围栏和企业微信通知同步做车辆风控。设备免破线取电，授权有效期内手机没网也能在车旁蓝牙开关车。',
+  copy: '租客小程序开关车。权限跟订单走，越界通知到群。免破线取电，手机没网也能开车。',
   tags: ['168 元/台起', '微信小程序', '蓝牙开关车', '订单自动授权', '免破线取电', '城市电子围栏', '没网也能用车'],
   values: [
-    { label: '钥匙交接', title: '少交一把实体钥匙', text: '减少门店交接、错交、漏还和钥匙丢失带来的管理成本。' },
-    { label: '权限控制', title: '退车自动收回权限', text: '订单满足条件才授权，退车或订单结束后自动取消租客钥匙。' },
-    { label: '车辆风控', title: '越界及时通知到群', text: '车辆定位、城市电子围栏和企业微信群通知联动。' },
-    { label: '无人值守', title: '支持自助取还车', text: '租客通过微信小程序解锁、上锁、寻车/鸣笛和打开后备箱。' }
+    { label: '钥匙交接', title: '少交实体钥匙', text: '少错交、少漏还、少丢钥匙。' },
+    { label: '权限控制', title: '退车自动收权', text: '订单结束，租客钥匙自动失效。' },
+    { label: '车辆风控', title: '越界通知到群', text: '定位和城市围栏联动提醒。' },
+    { label: '无人值守', title: '支持自助取还车', text: '解锁、上锁、寻车、后备箱。' }
   ],
   plans: [
-    { name: '1 年套餐', fit: '每台设备', price: '168 元/台', text: '含设备硬件本体、1 年平台服务、1 年流量。' },
-    { name: '3 年套餐', fit: '每台设备', price: '218 元/台', text: '含设备硬件本体、3 年平台服务、3 年流量。' }
+    { name: '1 年套餐', fit: '每台设备', price: '168 元/台', text: '含硬件、1 年平台和流量。' },
+    { name: '3 年套餐', fit: '每台设备', price: '218 元/台', text: '含硬件、3 年平台和流量。' }
   ],
   note: '价格不含税、不含运费、不含焊接钥匙费用。'
 }
@@ -442,23 +432,23 @@ const roles = {
     { label: '消息触达', title: '企业微信推送责任人' }
   ],
   items: [
-    { name: '管理层', metric: '经营视图', value: '看车辆利用、订单进度、资金状态和风险事项。' },
-    { name: '门店运营', metric: '交付任务', value: '按预订、签约、出车、退车、换车、续租推进交付。' },
-    { name: '销售人员', metric: '客户跟进', value: '持续跟进待签约、待交付、待续租和待结算客户。' },
-    { name: '财务人员', metric: '资金状态', value: '处理押金、租金、退款、收据、付款计划与结算凭证。' },
-    { name: '车管人员', metric: '车辆风险', value: '跟进年检、保险、维修、保养、出险、违章和验车留痕。' },
-    { name: '外部协作方', metric: '授权协同', value: '修理厂、保险协作方按授权查看维修、事故、报价和处理进度。' }
+    { name: '管理层', metric: '经营视图', value: '看车、看钱、看风险。' },
+    { name: '门店运营', metric: '交付任务', value: '按订单推进交付。' },
+    { name: '销售人员', metric: '客户跟进', value: '跟签约、交付、续租。' },
+    { name: '财务人员', metric: '资金状态', value: '管租金、押金、退款。' },
+    { name: '车管人员', metric: '车辆风险', value: '管年检、保险、维修、违章。' },
+    { name: '外部协作方', metric: '授权协同', value: '按授权查看协作事项。' }
   ]
 }
 
 const plans = {
   items: [
-    { name: '轻量版', fit: '50 台以内', price: '¥1,300 / 年', text: '小车队先把订单、车辆、收款和风险管起来。' },
-    { name: '标准版', fit: '400 台以内', price: '¥5,200 / 年', text: '适合多岗位协作、门店运营和精细化管理。' },
-    { name: '旗舰版', fit: '400 台以上', price: '¥10 / 台车 / 年', text: '适合更大车队、更多流程和更高并发。' }
+    { name: '轻量版', fit: '50 台以内', price: '¥1,300 / 年', text: '小车队先管起来。' },
+    { name: '标准版', fit: '400 台以内', price: '¥5,200 / 年', text: '适合门店协作。' },
+    { name: '旗舰版', fit: '400 台以上', price: '¥10 / 台车 / 年', text: '适合更大车队。' }
   ],
   next: {
-    copy: '评估时先看功能覆盖，再看价格版本；想快速判断是否适合自己的车队，可以直接进入演示或扫码咨询。',
+    copy: '先看功能，再看版本。想快速判断，直接进演示或扫码咨询。',
     contact: {
       label: '微信咨询',
       text: '扫码领演示账号，咨询版本和设备方案。'
@@ -819,49 +809,303 @@ $bp-mobile: 768px;
       object-fit: contain;
     }
   }
+}
 
-  &--numbered {
+.figma-digital {
+  display: grid;
+
+  &__main {
+    display: grid;
+    gap: 18px;
+  }
+
+  &__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 0.48fr);
+    gap: 40px;
+    align-items: start;
+  }
+
+  .figma-actions,
+  .figma-tags {
+    margin-top: 0;
+  }
+}
+
+.figma-feature-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 28px;
+  border-top: 1px solid var(--fl-hairline);
+
+  &__item {
+    min-width: 0;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--fl-hairline);
+
+    span {
+      @include label;
+      color: var(--fl-muted);
+    }
+
+    strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    p {
+      @include copy(16px);
+    }
+  }
+}
+
+.figma-price-strip {
+  display: grid;
+  gap: 0;
+  align-self: start;
+  border-top: 1px solid var(--fl-hairline);
+  border-bottom: 1px solid var(--fl-hairline);
+  padding: 4px 0;
+
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px 18px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--fl-hairline);
+
+    + .figma-price-strip__row {
+      padding-top: 18px;
+    }
+
+    span {
+      @include label;
+      color: var(--fl-muted);
+    }
+
+    strong {
+      font-size: 34px;
+      font-weight: 700;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    p {
+      @include copy(15px);
+      grid-column: 1 / -1;
+      margin-top: 0;
+    }
+  }
+
+  > .figma-label {
+    margin-top: 18px;
+  }
+
+  > p {
+    @include copy(15px);
+    max-width: 320px;
+  }
+}
+
+.figma-outcome-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--fl-hairline);
+  border-bottom: 1px solid var(--fl-hairline);
+
+  &__item {
+    min-width: 0;
+    padding: 18px 18px 20px;
+
+    + .figma-outcome-list__item {
+      border-left: 1px solid var(--fl-hairline);
+    }
+
+    span {
+      @include label;
+      color: var(--fl-muted);
+    }
+
+    h4 {
+      margin-top: 18px;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    p {
+      @include copy(16px);
+    }
+  }
+}
+
+.figma-proof-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--fl-hairline);
+
+  article {
+    min-width: 0;
+  }
+
+  span {
+    @include label;
+    color: var(--fl-muted);
+  }
+
+  strong {
+    display: block;
+    margin-top: 8px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  p {
+    @include copy(16px);
+  }
+}
+
+.figma-timeline {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0;
+  margin: 0;
+  padding: 18px 0 0;
+  border-top: 1px solid var(--fl-hairline);
+  list-style: none;
+
+  li {
     position: relative;
-    overflow: hidden;
-    // min-height: 168px;
+    min-width: 0;
+    padding: 18px 18px 0 0;
 
-    > *:not(.figma-card__index) {
-      position: relative;
-      z-index: 1;
-    }
-
-    h4,
-    strong {
-      margin-top: 30px;
+    &::before {
+      position: absolute;
+      top: -22px;
+      left: 0;
+      width: 9px;
+      height: 9px;
+      border: 1px solid currentColor;
+      border-radius: 9999px;
+      background: var(--fl-panel-bg);
+      content: "";
     }
   }
 
-  &__index {
-    position: absolute;
-    top: 18px;
-    right: 22px;
-    left: auto;
-    width: calc(100% - 44px);
-    font-family: var(--fl-mono);
-    font-size: clamp(54px, 3vw, 80px);
-    letter-spacing: -3px;
-    line-height: 0.85;
-    opacity: 0.1;
-    pointer-events: none;
-    text-align: right;
+  span {
+    @include label;
+    color: var(--fl-muted);
   }
 
-  &--outcome {
-    // min-height: 136px;
+  strong {
+    display: block;
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
 
-    h4,
-    strong {
-      margin-top: 12px;
-    }
+  p {
+    @include copy(15px);
+  }
+}
 
-    .figma-card__index {
-      top: 14px;
+.figma-capability-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 32px;
+  border-top: 1px solid var(--fl-hairline);
+
+  article {
+    min-width: 0;
+    padding: 12px 0 14px;
+    border-bottom: 1px solid var(--fl-hairline);
+  }
+
+  h4 {
+    margin: 0;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  p {
+    @include copy(15px);
+  }
+
+  .figma-tags {
+    margin-top: 8px;
+  }
+}
+
+.figma-status-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--fl-hairline);
+  border-bottom: 1px solid var(--fl-hairline);
+
+  article {
+    min-width: 0;
+    padding: 16px 18px;
+
+    + article {
+      border-left: 1px solid var(--fl-hairline);
     }
+  }
+
+  span {
+    @include label;
+    color: var(--fl-muted);
+  }
+
+  strong {
+    display: block;
+    margin-top: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+}
+
+.figma-role-table {
+  display: grid;
+  margin-top: 24px;
+  border-top: 1px solid var(--fl-hairline);
+
+  article {
+    display: grid;
+    grid-template-columns: minmax(92px, 0.42fr) minmax(110px, 0.5fr) minmax(0, 1.8fr);
+    gap: 16px;
+    align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--fl-hairline);
+  }
+
+  span {
+    @include label;
+    color: var(--fl-muted);
+  }
+
+  strong {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  p {
+    margin: 0;
+    color: currentColor;
+    font-size: 16px;
+    font-weight: 320;
+    line-height: 1.45;
+    opacity: 0.72;
   }
 }
 
@@ -1162,23 +1406,99 @@ $bp-mobile: 768px;
   }
 }
 
-.figma-workflow {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.figma-plan-table {
+  display: grid;
+  border-top: 1px solid var(--fl-hairline);
+  border-bottom: 1px solid var(--fl-hairline);
+
+  article {
+    display: grid;
+    grid-template-columns: minmax(96px, 0.45fr) minmax(100px, 0.55fr) minmax(150px, 0.6fr) minmax(0, 1.45fr);
+    gap: 18px;
+    align-items: baseline;
+    padding: 18px 0;
+
+    + article {
+      border-top: 1px solid var(--fl-hairline);
+    }
+  }
+
+  span {
+    @include label;
+    color: var(--fl-muted);
+  }
+
+  strong {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  em {
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  p {
+    margin: 0;
+    color: currentColor;
+    font-size: 16px;
+    font-weight: 320;
+    line-height: 1.45;
+    opacity: 0.72;
+  }
 }
 
-.figma-next {
+.figma-action-strip {
   display: grid;
-  gap: 12px;
-  grid-template-columns: 1fr;
-  margin-top: 32px;
-  @include card(24px);
-  background: var(--fl-panel-card);
+  grid-template-columns: minmax(0, 1.1fr) minmax(220px, 0.7fr) auto;
+  gap: 24px;
+  align-items: center;
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid var(--fl-hairline);
+
+  &__copy .figma-copy {
+    margin-top: 0;
+  }
+
+  &__contact {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 14px;
+    align-items: center;
+
+    img {
+      width: 72px;
+      height: 72px;
+      border: 1px solid var(--fl-hairline);
+      border-radius: 8px;
+      background: #ffffff;
+      object-fit: contain;
+    }
+
+    span {
+      @include label;
+      color: var(--fl-muted);
+    }
+
+    p {
+      @include copy(15px);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px;
+  }
 
   .figma-button {
-    width: 100%;
-    margin-top: 12px;
+    white-space: nowrap;
   }
 }
 
@@ -1283,12 +1603,79 @@ $bp-mobile: 768px;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .figma-workflow {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (min-width: $bp-mobile) and (max-width: 1100px) {
+  .figma-section {
+    > .figma-wrap {
+      padding: 32px;
+    }
+
+    h2,
+    h3 {
+      font-size: 34px;
+      line-height: 1.08;
+    }
   }
 
-  .figma-grid--capability {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .figma-section .figma-split {
+    grid-template-columns: minmax(240px, 0.56fr) minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .figma-intro {
+    gap: 12px;
+  }
+
+  .figma-copy {
+    font-size: 16px;
+  }
+
+  .figma-button {
+    min-height: 38px;
+    padding: 7px 14px;
+    font-size: 16px;
+  }
+
+  .figma-tags {
+    gap: 6px;
+  }
+
+  .figma-tags span {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  .figma-product {
+    width: 100%;
+    min-width: 0;
+
+    &__body {
+      grid-template-columns: 78px minmax(0, 1fr);
+      min-height: 420px;
+    }
+
+    &__nav {
+      padding: 12px 8px;
+    }
+
+    &__workspace {
+      grid-template-columns: minmax(0, 1fr) 112px;
+    }
+
+    &__table-head,
+    &__row {
+      grid-template-columns: minmax(0, 1fr) 44px 44px;
+      gap: 6px;
+    }
+
+    &__tasks {
+      padding: 10px;
+    }
+  }
+
+  .figma-plan-table em {
+    font-size: 24px;
   }
 }
 
@@ -1327,6 +1714,73 @@ $bp-mobile: 768px;
   .figma-grid,
   .figma-section .figma-section__head {
     grid-template-columns: 1fr;
+  }
+
+  .figma-digital,
+  .figma-digital__body,
+  .figma-feature-list,
+  .figma-outcome-list,
+  .figma-proof-list,
+  .figma-capability-list,
+  .figma-status-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .figma-price-strip__row {
+    grid-template-columns: 1fr;
+
+    strong {
+      margin-top: 4px;
+    }
+  }
+
+  .figma-price-strip > .figma-label {
+    margin-top: 18px;
+  }
+
+  .figma-outcome-list__item + .figma-outcome-list__item {
+    border-left: 0;
+    border-top: 1px solid var(--fl-hairline);
+  }
+
+  .figma-status-strip article + article {
+    border-left: 0;
+    border-top: 1px solid var(--fl-hairline);
+  }
+
+  .figma-timeline {
+    grid-template-columns: 1fr;
+    gap: 0;
+    border-top: 0;
+    border-left: 1px solid var(--fl-hairline);
+    padding: 0 0 0 18px;
+
+    li {
+      padding: 0 0 22px 18px;
+
+      &::before {
+        top: 5px;
+        left: -23px;
+      }
+    }
+  }
+
+  .figma-role-table article {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .figma-plan-table article,
+  .figma-action-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .figma-action-strip__actions {
+    justify-content: stretch;
+
+    .figma-button {
+      flex: 1 1 140px;
+    }
   }
 
   .figma-product__workspace {
@@ -1447,8 +1901,6 @@ $bp-mobile: 768px;
     transform: translateY(-2px);
   }
 
-  .figma-card--numbered:hover,
-  .figma-card--numbered:focus-within,
   .figma-card--contact:hover,
   .figma-card--contact:focus-within,
   .figma-product .figma-card:hover,
