@@ -1,6 +1,6 @@
 <template>
   <section class="figma-landing" aria-labelledby="site-hero-title">
-    <section class="figma-hero">
+    <section id="home" class="figma-hero">
       <div class="figma-theme-toggle-zone">
         <button
           class="figma-theme-toggle"
@@ -41,7 +41,7 @@
       </div>
     </section>
 
-    <section class="figma-section figma-section--soft">
+    <section id="dashboard" class="figma-section figma-section--soft">
       <div class="figma-wrap figma-split">
         <div class="figma-intro">
           <p class="figma-label">经营视图</p>
@@ -117,7 +117,7 @@
       </div>
     </section>
 
-    <section class="figma-section figma-section--soft" aria-labelledby="digital-key-title">
+    <section id="digital-key" class="figma-section figma-section--soft" aria-labelledby="digital-key-title">
       <div class="figma-wrap">
         <div class="figma-digital">
           <div class="figma-digital__main">
@@ -157,7 +157,35 @@
       </div>
     </section>
 
-    <section class="figma-section figma-section--soft">
+    <section id="roi" class="figma-section figma-section--soft" aria-labelledby="owner-return-title">
+      <div class="figma-wrap">
+        <div class="figma-section__head">
+          <div>
+            <p class="figma-label">投入产出</p>
+            <h3 id="owner-return-title">少掉多少人工，少出多少风险</h3>
+          </div>
+          <p class="figma-copy">老板看三件事：省人、少错、风险早知道。</p>
+        </div>
+
+        <div class="figma-roi-list" aria-label="投入产出要点">
+          <article v-for="item in ownerReturn.items" :key="item.title">
+            <span>{{ item.index }}</span>
+            <strong>{{ item.title }}</strong>
+            <p>{{ item.text }}</p>
+          </article>
+        </div>
+
+        <div class="figma-proof-list figma-proof-list--3" aria-label="投入产出补充说明">
+          <article v-for="item in ownerReturn.proofs" :key="item.title">
+            <span>{{ item.label }}</span>
+            <strong>{{ item.title }}</strong>
+            <p>{{ item.text }}</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="outcomes" class="figma-section figma-section--soft">
       <div class="figma-wrap">
         <div class="figma-section__head">
           <div>
@@ -186,7 +214,7 @@
       </div>
     </section>
 
-    <section class="figma-section figma-section--soft" aria-labelledby="workflow-title">
+    <section id="workflow" class="figma-section figma-section--soft" aria-labelledby="workflow-title">
       <div class="figma-wrap">
         <div class="figma-section__head">
           <div>
@@ -214,17 +242,17 @@
       </div>
     </section>
 
-    <section class="figma-section figma-section--soft" aria-labelledby="capability-title">
+    <section id="management" class="figma-section figma-section--soft" aria-labelledby="management-title">
       <div class="figma-wrap">
         <div class="figma-section__head">
           <div>
-            <p class="figma-label">可落地能力</p>
-            <h3 id="capability-title">经营关心的事，系统接住</h3>
+            <p class="figma-label">经营管理</p>
+            <h3 id="management-title">车、单、钱，先管清楚</h3>
           </div>
-          <p class="figma-copy">车辆、订单、资金、违章、合同和图片证据统一管理。</p>
+          <p class="figma-copy">车辆资产、订单进度、合同证件、收款押金统一管理。</p>
         </div>
-        <div class="figma-capability-list" aria-label="可落地能力清单">
-          <article v-for="item in capabilityMatrix.items" :key="item.title">
+        <div class="figma-capability-list" aria-label="经营管理能力清单">
+          <article v-for="item in capabilityMatrix.management" :key="item.title">
             <h4>{{ item.title }}</h4>
             <p>{{ item.text }}</p>
             <div class="figma-tags">
@@ -235,7 +263,28 @@
       </div>
     </section>
 
-    <section class="figma-section figma-section--soft" aria-labelledby="roles-title">
+    <section id="risk" class="figma-section figma-section--soft" aria-labelledby="risk-title">
+      <div class="figma-wrap">
+        <div class="figma-section__head">
+          <div>
+            <p class="figma-label">风控协同</p>
+            <h3 id="risk-title">风险早知道，责任能追到</h3>
+          </div>
+          <p class="figma-copy">违章年检、风险提醒、权限留痕、图片证据集中处理。</p>
+        </div>
+        <div class="figma-capability-list" aria-label="风控协同能力清单">
+          <article v-for="item in capabilityMatrix.risk" :key="item.title">
+            <h4>{{ item.title }}</h4>
+            <p>{{ item.text }}</p>
+            <div class="figma-tags">
+              <span v-for="tag in item.tags" :key="tag">{{ tag }}</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="roles" class="figma-section figma-section--soft" aria-labelledby="roles-title">
       <div class="figma-wrap">
         <div class="figma-section__head">
           <div>
@@ -262,7 +311,7 @@
       </div>
     </section>
 
-    <section class="figma-section figma-section--soft" aria-labelledby="plans-title">
+    <section id="pricing" class="figma-section figma-section--soft" aria-labelledby="plans-title">
       <div class="figma-wrap">
         <div class="figma-section__head">
           <div>
@@ -318,11 +367,137 @@
 </template>
 
 <script setup>
+import { nextTick, onBeforeUnmount, onMounted } from 'vue'
 import { useData } from 'vitepress'
 
 const demoUrl = import.meta.env.VITE_DEMO_URL
 const { isDark, theme } = useData()
 const footer = theme.value.footer
+
+const homeSectionIds = [
+  'home',
+  'dashboard',
+  'digital-key',
+  'roi',
+  'outcomes',
+  'workflow',
+  'management',
+  'risk',
+  'roles',
+  'pricing'
+]
+
+let sectionObserver
+let observedSections = []
+let scrollFrame
+let scrollContainer
+let isRestoringInitialHash = false
+
+const updateHash = (id) => {
+  if (typeof window === 'undefined' || window.location.hash === `#${id}`) {
+    return
+  }
+
+  window.history.replaceState(
+    window.history.state,
+    '',
+    `${window.location.pathname}${window.location.search}#${id}`
+  )
+}
+
+const getActiveSectionId = () => {
+  const viewportMiddle = window.innerHeight / 2
+  const sectionAtMiddle = observedSections.find((section) => {
+    const rect = section.getBoundingClientRect()
+    return rect.top <= viewportMiddle && rect.bottom >= viewportMiddle
+  })
+
+  if (sectionAtMiddle?.id) {
+    return sectionAtMiddle.id
+  }
+
+  return observedSections
+    .map((section) => {
+      const rect = section.getBoundingClientRect()
+      return {
+        id: section.id,
+        distance: Math.abs((rect.top + rect.bottom) / 2 - viewportMiddle)
+      }
+    })
+    .sort((a, b) => a.distance - b.distance)[0]?.id
+}
+
+const syncHashToCurrentSection = () => {
+  if (typeof window === 'undefined' || scrollFrame || isRestoringInitialHash) {
+    return
+  }
+
+  scrollFrame = window.requestAnimationFrame(() => {
+    scrollFrame = undefined
+    const activeSectionId = getActiveSectionId()
+
+    if (activeSectionId) {
+      updateHash(activeSectionId)
+    }
+  })
+}
+
+onMounted(async () => {
+  await nextTick()
+
+  observedSections = homeSectionIds
+    .map((id) => document.getElementById(id))
+    .filter(Boolean)
+
+  if (!observedSections.length) {
+    return
+  }
+
+  scrollContainer = document.querySelector('.figma-landing')
+
+  const initialHashId = decodeURIComponent(window.location.hash.replace(/^#/, ''))
+  const initialSection = observedSections.find((section) => section.id === initialHashId)
+
+  if (initialSection) {
+    isRestoringInitialHash = true
+    await new Promise((resolve) => window.requestAnimationFrame(resolve))
+    initialSection.scrollIntoView({ behavior: 'instant', block: 'center' })
+    await new Promise((resolve) => window.setTimeout(resolve, 180))
+    isRestoringInitialHash = false
+  }
+
+  scrollContainer?.addEventListener('scroll', syncHashToCurrentSection, { passive: true })
+  window.addEventListener('scroll', syncHashToCurrentSection, { passive: true })
+  window.addEventListener('resize', syncHashToCurrentSection)
+
+  if (typeof IntersectionObserver !== 'undefined') {
+    sectionObserver = new IntersectionObserver(syncHashToCurrentSection, {
+      threshold: [0, 0.25, 0.5, 0.75, 1],
+      rootMargin: '-8% 0px -8% 0px'
+    })
+
+    observedSections.forEach((section) => sectionObserver.observe(section))
+  }
+
+  window.setTimeout(syncHashToCurrentSection, 160)
+})
+
+onBeforeUnmount(() => {
+  sectionObserver?.disconnect()
+  scrollContainer?.removeEventListener('scroll', syncHashToCurrentSection)
+  window.removeEventListener('scroll', syncHashToCurrentSection)
+  window.removeEventListener('resize', syncHashToCurrentSection)
+
+  if (scrollFrame) {
+    window.cancelAnimationFrame(scrollFrame)
+  }
+
+  sectionObserver = undefined
+  observedSections = []
+  scrollFrame = undefined
+  scrollContainer = undefined
+  isRestoringInitialHash = false
+})
 
 const hero = {
   eyebrow: '给租车公司的经营系统',
@@ -396,12 +571,14 @@ const workflow = {
 }
 
 const capabilityMatrix = {
-  items: [
+  management: [
     { title: '车辆资产看得清', text: '档案、保险、年检、维修统一管。', tags: ['资产台账', '年检保险', '维修保养'] },
     { title: '订单进度不脱节', text: '签约、出车、续租、退车围绕订单走。', tags: ['订单流转', '换车续租', '退车结算'] },
     { title: '合同证件少录入', text: '证件识别，合同和单据自动生成。', tags: ['证件识别', '合同模板', '单据生成'] },
+    { title: '收款押金可核', text: '租金、押金、退款统一对账。', tags: ['收付款', '押金', '结算'] }
+  ],
+  risk: [
     { title: '违章年检自动盯', text: '违章、年检同步到车和订单。', tags: ['交管同步', '自动同步', '司机匹配'] },
-    { title: '收款押金可核', text: '租金、押金、退款统一对账。', tags: ['收付款', '押金', '结算'] },
     { title: '风险消息到群', text: '到期、欠租、违章自动提醒。', tags: ['风险一览', '企业微信', '提前提醒'] },
     { title: '权限留痕防扯皮', text: '按角色授权，关键操作有记录。', tags: ['角色权限', '按钮控制', '操作留痕'] },
     { title: '图片证据防纠纷', text: '验车、维修、出险图片可回溯。', tags: ['图片留痕', '证据链', '自动清理'] }
@@ -422,6 +599,20 @@ const digitalKey = {
     { name: '3 年套餐', fit: '每台设备', price: '218 元/台', text: '含硬件、3 年平台和流量。' }
   ],
   note: '价格不含税、不含运费、不含焊接钥匙费用。'
+}
+
+const ownerReturn = {
+  items: [
+    { index: '01', title: '少交钥匙', text: '少错交、少漏还、少丢钥匙。' },
+    { index: '02', title: '少人工授权', text: '开单、付款、退车自动管权限。' },
+    { index: '03', title: '少对账时间', text: '租金、押金、退款回到订单。' },
+    { index: '04', title: '风险早知道', text: '越界、逾期、违章及时到群。' }
+  ],
+  proofs: [
+    { label: '门店', title: '交接更轻', text: '钥匙和交付少靠人工确认。' },
+    { label: '财务', title: '钱账更清', text: '收款、押金、退款可追。' },
+    { label: '车管', title: '车辆更稳', text: '位置、围栏、违章能盯住。' }
+  ]
 }
 
 const roles = {
@@ -939,6 +1130,40 @@ $bp-mobile: 768px;
     p {
       @include copy(16px);
     }
+  }
+}
+
+.figma-roi-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--fl-hairline);
+  border-bottom: 1px solid var(--fl-hairline);
+
+  article {
+    min-width: 0;
+    padding: 20px 18px;
+
+    + article {
+      border-left: 1px solid var(--fl-hairline);
+    }
+  }
+
+  span {
+    @include label;
+    color: var(--fl-muted);
+  }
+
+  strong {
+    display: block;
+    margin-top: 14px;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  p {
+    @include copy(16px);
   }
 }
 
@@ -1720,6 +1945,7 @@ $bp-mobile: 768px;
   .figma-digital__body,
   .figma-feature-list,
   .figma-outcome-list,
+  .figma-roi-list,
   .figma-proof-list,
   .figma-capability-list,
   .figma-status-strip {
@@ -1739,6 +1965,11 @@ $bp-mobile: 768px;
   }
 
   .figma-outcome-list__item + .figma-outcome-list__item {
+    border-left: 0;
+    border-top: 1px solid var(--fl-hairline);
+  }
+
+  .figma-roi-list article + article {
     border-left: 0;
     border-top: 1px solid var(--fl-hairline);
   }
