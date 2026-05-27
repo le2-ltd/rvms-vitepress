@@ -28,6 +28,7 @@
               class="figma-button"
               :class="`figma-button--${action.theme}`"
               :href="action.link"
+              @click="handleHomeActionClick(action, $event)"
             >
               {{ action.text }}
             </a>
@@ -52,7 +53,7 @@
           <div class="figma-actions" aria-label="首页落地页操作">
             <a class="figma-button figma-button--primary" href="/overview/what-features">看核心功能</a>
             <a class="figma-button figma-button--secondary" href="/overview/featured-functions">看特色能力</a>
-            <a class="figma-button figma-button--secondary" href="/overview/version-introduction">看价格版本</a>
+            <a class="figma-button figma-button--secondary" href="/#pricing" @click.prevent="scrollToHomeSection('pricing')">看价格版本</a>
             <a class="figma-button figma-button--magenta" :href="demoUrl" target="_blank" rel="noreferrer">进入演示</a>
           </div>
           <div class="figma-tags" aria-label="核心能力">
@@ -442,6 +443,24 @@ const syncHashToCurrentSection = () => {
   })
 }
 
+const scrollToHomeSection = (id) => {
+  const section = document.getElementById(id)
+
+  if (!section) {
+    return
+  }
+
+  section.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  updateHash(id)
+}
+
+const handleHomeActionClick = (action, event) => {
+  if (action.link === '/#pricing') {
+    event.preventDefault()
+    scrollToHomeSection('pricing')
+  }
+}
+
 onMounted(async () => {
   await nextTick()
 
@@ -506,7 +525,7 @@ const hero = {
   actions: [
     { theme: 'primary', text: '看核心功能', link: '/overview/what-features' },
     { theme: 'secondary', text: '看特色能力', link: '/overview/featured-functions' },
-    { theme: 'secondary', text: '看价格版本', link: '/overview/version-introduction' }
+    { theme: 'secondary', text: '看价格版本', link: '/#pricing' }
   ]
 }
 

@@ -19,7 +19,7 @@
 CTA：
 - 看核心功能：`/overview/what-features`
 - 看特色能力：`/overview/featured-functions`
-- 看价格版本：`/overview/version-introduction`
+- 看价格版本：`/#pricing`
 - 演示站点：由 `.env.development` / `.env.production` 中的 `VITE_DEMO_URL` 控制
 
 Hero 短句备选：
@@ -247,12 +247,12 @@ Hero 短句备选：
 下一步行动条：
 - 经营评估：先看功能。确认是否覆盖当前业务。
 - 体验产品：进入演示。体验签约、出车、退车结算。
-- 采购决策：按车队规模看版本费用。
+- 采购决策：首页价格区按车队规模看版本费用。
 
 按钮：
 - 先看功能：`/overview/what-features`
 - 进入演示：由 `.env.development` / `.env.production` 中的 `VITE_DEMO_URL` 控制
-- 查看版本：`/overview/version-introduction`
+- 查看版本：`/#pricing`
 
 版本价格表：
 - 轻量版：50 台以内，¥1,300/年。
@@ -314,7 +314,7 @@ Hero 短句备选：
 参考来源：
 - `docs/overview/what-features.md`
 - `docs/overview/featured-functions.md`
-- `docs/overview/version-introduction.md`
+- 首页 `#pricing` 价格区
 
 关于 `docs/index.md`：
 - `docs/index.md` 是 VitePress 首页入口，应继续保留。
