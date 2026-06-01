@@ -33,6 +33,16 @@
               {{ action.text }}
             </a>
           </div>
+          <div class="figma-hero__proof" aria-label="首页核心价值">
+            <article v-for="item in hero.proofs" :key="item.title">
+              <span>{{ item.label }}</span>
+              <strong>{{ item.title }}</strong>
+              <p>{{ item.text }}</p>
+            </article>
+          </div>
+          <div class="figma-tags figma-hero__tags" aria-label="适用业务场景">
+            <span v-for="tag in hero.scenes" :key="tag">{{ tag }}</span>
+          </div>
         </div>
 
         <div class="figma-hero__visual" aria-label="智行租赁产品图标">
@@ -53,7 +63,6 @@
           <div class="figma-actions" aria-label="首页落地页操作">
             <a class="figma-button figma-button--primary" href="/overview/what-features">看核心功能</a>
             <a class="figma-button figma-button--secondary" href="/overview/featured-functions">看特色能力</a>
-            <a class="figma-button figma-button--secondary" href="/#pricing" @click.prevent="scrollToHomeSection('pricing')">看价格版本</a>
             <a class="figma-button figma-button--magenta" :href="demoUrl" target="_blank" rel="noreferrer">进入演示</a>
           </div>
           <div class="figma-tags" aria-label="核心能力">
@@ -525,8 +534,13 @@ const hero = {
   actions: [
     { theme: 'primary', text: '看核心功能', link: '/overview/what-features' },
     { theme: 'secondary', text: '看特色能力', link: '/overview/featured-functions' },
-    { theme: 'secondary', text: '看价格版本', link: '/#pricing' }
-  ]
+  ],
+  proofs: [
+    { label: '管车', title: '车辆状态集中看', text: '在租、待交、待退、维修和年检都有状态。' },
+    { label: '管钱', title: '收款押金可追', text: '应收、实收、退款和凭证回到同一条订单链路。' },
+    { label: '管风险', title: '异常及时到人', text: '欠租、违章、越界、到期提醒推给负责人。' }
+  ],
+  scenes: ['长租', '短租', '以租代购', '多门店', '多角色协作', '租客端小程序'],
 }
 
 const toggleTheme = () => {
@@ -806,6 +820,47 @@ $bp-mobile: 768px;
       height: 72%;
       object-fit: contain;
     }
+  }
+
+  &__proof {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    max-width: 820px;
+    margin-top: 10px;
+    border-top: 1px solid var(--fl-hairline);
+    border-bottom: 1px solid var(--fl-hairline);
+
+    article {
+      min-width: 0;
+      padding: 16px 16px 18px 0;
+
+      + article {
+        border-left: 1px solid var(--fl-hairline);
+        padding-left: 16px;
+      }
+    }
+
+    span {
+      @include label;
+      color: var(--fl-muted);
+    }
+
+    strong {
+      display: block;
+      margin-top: 9px;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.28;
+    }
+
+    p {
+      @include copy(15px);
+    }
+  }
+
+  &__tags {
+    max-width: 760px;
   }
 
   &__glow {
@@ -1825,6 +1880,28 @@ $bp-mobile: 768px;
       width: 320px;
       justify-self: end;
     }
+
+    &__proof {
+      grid-template-columns: 1fr;
+
+      article {
+        padding: 12px 0;
+
+        + article {
+          border-top: 1px solid var(--fl-hairline);
+          border-left: 0;
+          padding-left: 0;
+        }
+      }
+
+      strong {
+        font-size: 18px;
+      }
+
+      p {
+        font-size: 14px;
+      }
+    }
   }
 
   .figma-copy {
@@ -1932,6 +2009,10 @@ $bp-mobile: 768px;
     font-size: 44px;
   }
 
+  .figma-hero {
+    padding: 88px 0 56px;
+  }
+
   .figma-hero__inner,
   .figma-section .figma-split {
     grid-template-columns: 1fr;
@@ -1940,6 +2021,20 @@ $bp-mobile: 768px;
   .figma-hero__visual {
     width: 220px;
     justify-self: center;
+  }
+
+  .figma-hero__proof {
+    grid-template-columns: 1fr;
+
+    article {
+      padding: 14px 0;
+
+      + article {
+        border-top: 1px solid var(--fl-hairline);
+        border-left: 0;
+        padding-left: 0;
+      }
+    }
   }
 
   .figma-section {
