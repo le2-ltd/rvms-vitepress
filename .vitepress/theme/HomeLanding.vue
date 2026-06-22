@@ -74,7 +74,7 @@
           <div class="figma-product__top">
             <i aria-hidden="true"></i>
             <span>Dashboard</span>
-            <b>console.le2.fun</b>
+            <b>rvms.le2.ltd</b>
             <strong>智行租赁</strong>
           </div>
           <div class="figma-product__body">

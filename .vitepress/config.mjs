@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from "node:fs";
 
 import { MermaidMarkdown, MermaidPlugin } from "vitepress-plugin-mermaid";
 
-const siteUrl = "https://rvms.le2.fun";
+const siteUrl = "https://rvms.le2.ltd";
 const siteName = "智行租赁";
 const defaultDescription =
   "智行租赁是面向汽车租赁公司的数字化运营系统，统一管理车辆、司机、客户、订单、合同、财务、风控、消息提醒与图片留痕，帮助门店、车管、财务和管理层高效协同。";
