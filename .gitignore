@@ -4,5 +4,4 @@ unpackage/
 .DS_Store
 .vitepress/cache/
 .vitepress/dist/
-.pnpm-store/
 .env

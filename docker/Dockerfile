@@ -19,20 +19,18 @@ RUN if [ -n "$NPM_REGISTRY" ]; then \
         npm config set registry "$NPM_REGISTRY"; \
     fi
 
-RUN npm install -g pnpm
-
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
+COPY package.json package-lock.json .npmrc ./
 
-RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
-    pnpm install --frozen-lockfile; \
-    pnpm ls
+RUN --mount=type=cache,id=rvms-npm,target=/root/.npm \
+    npm ci
 
 COPY . .
 
-RUN pnpm run docs:build
+RUN npm run docs:build
 
 FROM ${IMAGE_MIRROR:-${IMAGE_PREFIX}}nginx:latest
 
+COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/.vitepress/dist /usr/share/nginx/html

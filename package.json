@@ -15,5 +15,10 @@
     "sass": "^1.99.0",
     "vitepress": "next",
     "vitepress-plugin-mermaid": "^2.0.17"
+  },
+  "allowScripts": {
+    "@parcel/watcher": true,
+    "esbuild": true,
+    "fsevents": false
   }
 }

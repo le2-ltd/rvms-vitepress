@@ -71,7 +71,7 @@ jobs:
               uses: docker/build-push-action@master
               with:
                   context: .
-                  file: ./Dockerfile
+                  file: ./docker/Dockerfile
                   build-args: |
                       APP_ENV=production
                   platforms: ${{ matrix.platform }} # 原生构建，无 QEMU
